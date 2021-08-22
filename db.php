@@ -2,6 +2,8 @@
 
 require('vendor/autoload.php');
 
+?>
+
 
 
 

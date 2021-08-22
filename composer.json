@@ -1,0 +1,14 @@
+{
+    "name": "akane/dich",
+    "authors": [
+        {
+            "name": "akane9x",
+            "email": "akane9x@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/database": "^8.54",
+        "nesbot/carbon": "^2.51",
+        "illuminate/events": "^8.54"
+    }
+}
