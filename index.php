@@ -248,13 +248,14 @@ $thangGieo = $al[0]->thang;
 
 $haoDong = 3;
 $queChinh = queChinh($batQuai, $quePhucHy, 4, 3);
-$queChinh = ['dataName' => 'Quẻ Chính','que' => '011011'];
+$queChinh = ['dataName' => 'Quẻ Chính','que' => '101011'];
 $queChinhArr = str_split($queChinh['que'], 1);
 x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
 // x($queHo);
 
-x(queBien($queChinh['que'],$haoDong, $quePhucHy));
+$queBien = queBien($queChinh['que'],$haoDong, $quePhucHy);
+$queBienArr = str_split($queBien['que'], 1);
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
 x($gd);
@@ -297,161 +298,404 @@ x(vongTruongSinh('Kim'));
 
 </head>
 <body>
+      <hr>
       <h4>Giờ <b><?= $al[0]->gio ?></b>, ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b></h4>
 <a class='btn btn-success' href="getNgay.php">Cập nhật Thời gian</a>
-      <table id="table table-striped table-hover">
-           
+
+
+      <table class="table table-hover">
             <tr>
-                  <td style='width:5%'>
+                  <th>
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['que'] ?></span>
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
-                  </td>
-                  <th style='width:1%'>Thế</th>
-                  <th style='width:1%'>Ứng</th>
-                  <th style='width:1%'>Động</th>
-                  <th style='width:1%'>Địa chi</th>
-                  <th style='width:1%'>Không Vong</th>
-                  <th style='width:1%'>Ngũ Hành</th>
-                  <th style='width:1%'>Lục Thân</th>
-                  <th style='width:1%'>Lục Thú</th>
-                  <th style='width:1%'>TS Ngày</th>
-                  <th style='width:1%'>TS Tháng</th>
+                  </th>
+                  <th>Thế</th>
+                  <th>Ứng</th>
+                  <th>Động</th>
+                  <th>Địa chi</th>
+                  <th>Không Vong</th>
+                  <th>Ngũ Hành</th>
+                  <th>Lục Thân</th>
+                  <th>Lục Thú</th>
+                  <th>TS Ngày</th>
+                  <th>TS Tháng</th>
             </tr>
-            
-            <tr>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    if($i != $haoDong -1){
-                                          if($queChinhArr[$i] == 1){
-                                                ?><p><span class='duong'>&nbsp;</span></p><?php
-                                          }elseif($queChinhArr[$i] == 0){
-                                                ?><p>
-                                                <span class='am'>&nbsp;</span
-                                                ><span class='cach-am'>&nbsp;</span
-                                                ><span class='am'>&nbsp;</span>
-                                          </p><?php
+            <?php
+                  for($i =5 ; $i >= 0; $i--):
+                        ?>
+                              <tr>
+                                    <td>
+                                          <?php
+                                                if($i != $haoDong -1){
+                                                      if($queChinhArr[$i] == 1){
+                                                            ?><p><span class='duong'>&nbsp;</span></p><?php
+                                                      }elseif($queChinhArr[$i] == 0){
+                                                            ?><p>
+                                                            <span class='am'>&nbsp;</span
+                                                            ><span class='cach-am'>&nbsp;</span
+                                                            ><span class='am'>&nbsp;</span>
+                                                      </p><?php
+                                                      }
+                                                }else{
+                                                      if($queChinhArr[$i] == 1){
+                                                            ?><p><span class='dong-duong'>&nbsp;</span></p><?php
+                                                      }elseif($queChinhArr[$i] == 0){
+                                                            ?><p>
+                                                            <span class='dong-am'>&nbsp;</span
+                                                            ><span class='cach-am'>&nbsp;</span
+                                                            ><span class='am dong'>&nbsp;</span>
+                                                      </p><?php
+                                                      }
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php 
+                                          if($i == $gd['haoThe'] - 1){
+                                          echo "Thế";
                                           }
-                                    }else{
-                                          if($queChinhArr[$i] == 1){
-                                                ?><p><span class='dong-duong'>&nbsp;</span></p><?php
-                                          }elseif($queChinhArr[$i] == 0){
-                                                ?><p>
-                                                <span class='dong-am'>&nbsp;</span
-                                                ><span class='cach-am'>&nbsp;</span
-                                                ><span class='am dong'>&nbsp;</span>
-                                          </p><?php
+                                    ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                if($i == $gd['haoUng'] - 1){
+                                                      echo "Ứng";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                if($i == $haoDong - 1){
+                                                      echo "Động";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $dc['diaChi'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                 if(in_array($dc['diaChi'][$i],$kv['khongVong'])){
+                                                      echo "KV";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $mau = mauNguHanh($dcnh['nguHanh'][$i]);
+                                                echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $lt['lucThan'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $lucThu['lucThu'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $dcNgay = explode(' ', $ngayGieo);
+                                                $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
+                                                echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                                
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $dcThang = explode(' ', $thangGieo);
+                                                $vts = vongTruongSinh(nguHanhTheoDiaChi($dcThang[1]));
+                                                      echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                          ?>
+                                    </td>
+                              </tr>
+
+                              
+                              
+                        <?php
+                  endfor;
+                  ?> 
+                        <tr>
+                              <td colspan='11'><hr></td>
+                        </tr>
+                        <tr>
+                                    <?php
+                                          $gd = giaDinh($queBien['que'],$quePhucHy,$batQuaiNguHanh);
+                                          
+                                          $tc = thienCan($queBien['que'],$quePhucHy,$thienCan);
+                                          
+                                          $dc = diaChi($queBien['que'],$quePhucHy,$diaChi);
+                                          
+                                          $dcnh = diaChiNguHanh($dc['diaChi'],$conGiapNguHanh);
+                                          
+                                          $lt = lucthan($gd['nguHanh'],$dcnh);
+                                    ?>
+                              <th>
+                                    <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>
+                                    <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
+                              </th>
+                              <th>Thế</th>
+                              <th>Ứng</th>
+                              <th>Động</th>
+                              <th>Địa chi</th>
+                              <th>Không Vong</th>
+                              <th>Ngũ Hành</th>
+                              <th>Lục Thân</th>
+                              <th>Lục Thú</th>
+                              <th>TS Ngày</th>
+                              <th>TS Tháng</th>
+                        </tr>
+                  <?php
+                  for($i = 5; $i>=0; $i--){
+                        ?>
+                              <tr>
+                                    
+
+                                    <td>
+                                          <?php
+                                                if($i != $haoDong -1){
+                                                      if($queBienArr[$i] == 1){
+                                                            ?><p><span class='duong'>&nbsp;</span></p><?php
+                                                      }elseif($queBienArr[$i] == 0){
+                                                            ?><p>
+                                                            <span class='am'>&nbsp;</span
+                                                            ><span class='cach-am'>&nbsp;</span
+                                                            ><span class='am'>&nbsp;</span>
+                                                      </p><?php
+                                                      }
+                                                }else{
+                                                      if($queBienArr[$i] == 1){
+                                                            ?><p><span class='dong-duong'>&nbsp;</span></p><?php
+                                                      }elseif($queBienArr[$i] == 0){
+                                                            ?><p>
+                                                            <span class='dong-am'>&nbsp;</span
+                                                            ><span class='cach-am'>&nbsp;</span
+                                                            ><span class='dong-am'>&nbsp;</span>
+                                                      </p><?php
+                                                      }
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php 
+                                          if($i == $gd['haoThe'] - 1){
+                                          echo "Thế";
                                           }
-                                    }
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    if($i == $gd['haoThe'] - 1){
-                                          echo "<p>Thế</p>";
-                                    }else{
-                                          echo "<p>&nbsp;</p>";
-                                    }
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    if($i == $gd['haoUng'] - 1){
-                                          echo "<p>Ứng</p>";
-                                    }else{
-                                          echo "<p>&nbsp;</p>";
-                                    }
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    if($i == $haoDong - 1){
-                                          echo "<p>Động</p>";
-                                    }else{
-                                          echo "<p>&nbsp;</p>";
-                                    }
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    echo "<p>".$dc['diaChi'][$i]."</p>";
-                              }
-                        ?>
-                  </td>
+                                    ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                if($i == $gd['haoUng'] - 1){
+                                                      echo "Ứng";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                if($i == $haoDong - 1){
+                                                      echo "Động";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $dc['diaChi'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                 if(in_array($dc['diaChi'][$i],$kv['khongVong'])){
+                                                      echo "KV";
+                                                }
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $mau = mauNguHanh($dcnh['nguHanh'][$i]);
+                                                echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $lt['lucThan'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                echo $lucThu['lucThu'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $dcNgay = explode(' ', $ngayGieo);
+                                                $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
+                                                echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                                
+                                          ?>
+                                    </td>
+                                    <td>
+                                          <?php
+                                                $dcThang = explode(' ', $thangGieo);
+                                                $vts = vongTruongSinh(nguHanhTheoDiaChi($dcThang[1]));
+                                                      echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                          ?>
+                                    </td>
 
-                  <td>
+                              </tr>
                         <?php
-                              for($i = 5; $i >=0; $i--){
-                                    if(in_array($dc['diaChi'][$i],$kv['khongVong'])){
-                                          echo "<p>KV</p>";
-                                    }else{
-                                          echo "<p>&nbsp;</p>";
-                                    }
-                              }
-                        ?>
-                  </td>
-
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    $mau = mauNguHanh($dcnh['nguHanh'][$i]);
-                                    echo "<p><span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span></p>";
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    //$mau = mauNguHanh($dcnh[$i]);
-                                    echo "<p>".$lt['lucThan'][$i]."</p>";
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              for($i = 5; $i >=0; $i--){
-                                    //$mau = mauNguHanh($dcnh[$i]);
-                                    echo "<p>".$lucThu['lucThu'][$i]."</p>";
-                              }
-                        ?>
-                  </td>
-                  <td>
-                        <?php
-                              $dcNgay = explode(' ', $ngayGieo);
-                              $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
-                              // x($vts);
-                              for($i = 5; $i >=0; $i--){
-                                    //$mau = mauNguHanh($dcnh[$i]);
-                                    echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
-                              }
-                        ?>
-                  </td>
-
-                  <td>
-                        <?php
-                              $dcNgay = explode(' ', $thangGieo);
-                              $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
-                              // x($vts);
-                              for($i = 5; $i >=0; $i--){
-                                    //$mau = mauNguHanh($dcnh[$i]);
-                                    echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
-                              }
-                        ?>
-                  </td>
-                  
-            </tr>
-
-            <div id="data"></div>
-            
+                  }
+            ?>
       </table>
+
+      <div id="data"></div>
+
+      <div class="container">
+            <div id='ketquass'></div>
+            <hr>
+            <form id='sosanh' action="sosanh.php" method='post'>
+            <table class="table">
+                  <tr>
+                        <th>Loại SS</th>
+                        <th>Đối tượng 1</th>
+                        <th>Đối tượng 2</th>
+                        <th></th>
+                        <th>Kết Quả</th>
+                  </tr>
+                  <tr>
+                        <td>
+                              <select class='form-control' name="loai" id="loai">
+                                    <option value="nguHanh">Ngũ Hành</option>
+                                    <option value="diaChi">Địa Chi</option>
+                                    <option value="lucThan">Lục Thân</option>
+                              </select>
+                        </td>
+                        <td id='con1'>
+                              <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                        </td>
+                        <td id='con2'>
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                        </td>
+                        <td><button type="submit" class='btn btn-success' id='sosanh'>So Sánh</button></td>
+                  </tr>
+            </table>
+            </form>
+
+      </div>
+
+      <script>
+            $(document).ready(function () {
+                  let ss = $('#loai').val();
+                  $('#loai').on('change', function (e){
+                        var optionSelected = $("option:selected", this);
+                        var ss = this.value;
+
+                        if(ss == 'nguHanh'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                              `)
+                        }else if(ss == 'diaChi'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Tý">Tý</option>
+                                          <option value="Sửu">Sửu</option>
+                                          <option value="Dần">Dần</option>
+                                          <option value="Mão">Mão</option>
+                                          <option value="Thìn">Thìn</option>
+                                          <option value="Tỵ">Tỵ</option>
+                                          <option value="Ngọ">Ngọ</option>
+                                          <option value="Mùi">Mùi</option>
+                                          <option value="Thân">Thân</option>
+                                          <option value="Dậu">Dậu</option>
+                                          <option value="Tuất">Tuất</option>
+                                          <option value="Hợi">Hợi</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Tý">Tý</option>
+                                          <option value="Sửu">Sửu</option>
+                                          <option value="Dần">Dần</option>
+                                          <option value="Mão">Mão</option>
+                                          <option value="Thìn">Thìn</option>
+                                          <option value="Tỵ">Tỵ</option>
+                                          <option value="Ngọ">Ngọ</option>
+                                          <option value="Mùi">Mùi</option>
+                                          <option value="Thân">Thân</option>
+                                          <option value="Dậu">Dậu</option>
+                                          <option value="Tuất">Tuất</option>
+                                          <option value="Hợi">Hợi</option>
+                                    </select>
+                              `)
+                        }else if(ss == 'lucThan'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Huynh Đệ">Huynh Đệ</option>
+                                          <option value="Tử Tôn">Tử Tôn</option>
+                                          <option value="Thê Tài">Thê Tài</option>
+                                          <option value="Quan Quỷ">Quan Quỷ</option>
+                                          <option value="Phụ Mẫu">Phụ Mẫu</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Huynh Đệ">Huynh Đệ</option>
+                                          <option value="Tử Tôn">Tử Tôn</option>
+                                          <option value="Thê Tài">Thê Tài</option>
+                                          <option value="Quan Quỷ">Quan Quỷ</option>
+                                          <option value="Phụ Mẫu">Phụ Mẫu</option>
+                                    </select>
+                              `)
+                        }
+
+                        console.log(valueSelected);
+                  })
+
+                  $('#sosanh').submit((e) => {
+                        e.preventDefault();
+                        $.post('sosanh.php', {
+                              loai: $('#loai').val(),
+                              dt1: $('#dt1').val(),
+                              dt2: $('#dt2').val(),
+                        },(data) =>{
+                              $('#ketquass').append(data);
+                        })
+                  })
+
+                  
+            });
+      </script>
 
     
 </body>
