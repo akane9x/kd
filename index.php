@@ -317,10 +317,10 @@ $lucThu = lucThu($ngayGieo);
                   <th>Ứng</th>
                   <th>Động</th>
                   <th>Địa chi</th>
-                  <th>Không Vong</th>
+                  <th>KV</th>
                   <th>Ngũ Hành</th>
-                  <th>Lục Thân</th>
-                  <th>Lục Thú</th>
+                  <th>Thân</th>
+                  <th>Thú</th>
                   <th>TS Ngày</th>
                   <th>TS Tháng</th>
             </tr>
@@ -447,10 +447,10 @@ $lucThu = lucThu($ngayGieo);
                               <th>Ứng</th>
                               <th>Động</th>
                               <th>Địa chi</th>
-                              <th>Không Vong</th>
+                              <th>KV</th>
                               <th>Ngũ Hành</th>
-                              <th>Lục Thân</th>
-                              <th>Lục Thú</th>
+                              <th>Thân</th>
+                              <th>Thú</th>
                               <th>TS Ngày</th>
                               <th>TS Tháng</th>
                         </tr>
