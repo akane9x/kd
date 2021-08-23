@@ -282,13 +282,16 @@ class d2a
 
 $dt = new Carbon;
 
-$homNay = $dt->now();
+$homNay = $dt->now('Asia/Ho_Chi_Minh');
 
 $d2a = new d2a;
 
 $homNayAm = $d2a->convertSolar2Lunar($homNay->day, $homNay->month, $homNay->year,7);
+array_pop($homNayAm);
+array_push($homNayAm, $homNay->hour);
+array_push($homNayAm, $homNay->minute);
 
-function queChinh($bQ, $quePH, $thuong, $ha){
+function queChinh($bQ, $quePH, $ha, $thuong){
       $que = $bQ[$ha-1].$bQ[$thuong-1];
       return [
 		'dataName' => 'Quẻ Chính',
@@ -487,7 +490,7 @@ function LucThanSinhKhac($lt1, $lt2){
       if($lt1 == $lt2) $a = 'Trùng';
       $lucThan = [
             'Huynh Đệ' => ['Sinh' => 'Tử Tôn','Khắc' => 'Thê Tài', 'Được Sinh' => 'Phụ Mẫu', 'Bị Khắc' => "Quan Quỷ"],
-            'Tử Tôn' => ['Sinh' => 'Thê Tài','Khắc' => 'Quan Quỷ', 'Được Sinh' => 'Huynh Dệ', 'Bị Khắc' => "Phụ Mẫu"],
+            'Tử Tôn' => ['Sinh' => 'Thê Tài','Khắc' => 'Quan Quỷ', 'Được Sinh' => 'Huynh Đệ', 'Bị Khắc' => "Phụ Mẫu"],
             'Thê Tài' => ['Sinh' => 'Quan Quỷ','Khắc' => 'Phụ Mẫu', 'Được Sinh' => 'Tử Tôn', 'Bị Khắc' => "Huynh Đệ"],
             'Quan Quỷ' => ['Sinh' => 'Phụ Mẫu','Khắc' => 'Huynh Đệ', 'Được Sinh' => 'Thê Tài', 'Bị Khắc' => "Tử Tôn"],
             'Phụ Mẫu' => ['Sinh' => 'Huynh Đệ', 'Khắc' => 'Tử Tôn', 'Được Sinh' => 'Quan Quỷ', 'Bị Khắc' => "Thê Tài"],
@@ -797,6 +800,60 @@ function nguHanhTheoDiaChi($dc){
 		'Hợi' => 'Thủy',
 	];
 	return $diaChiNguHanh[$dc];
+}
+
+function gieoQueMaiHoa ($n, $time){
+	$diaChi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+	$nam = explode(' ',$n);
+
+	$soNam = array_search($nam[1],$diaChi) + 1;
+
+	$gio = [
+		'0' => 'Tý',
+		'1' => 'Sửu',
+		'2' => 'Sửu',
+		'3' => 'Dần',
+		'4' => 'Dần',
+		'5' => 'Mão',
+		'6' => 'Mão',
+		'7' => 'Thìn',
+		'8' => 'Thìn',
+		'9' => 'Tỵ',
+		'10' => 'Tỵ',
+		'11' => 'Ngọ',
+		'12' => 'Ngọ',
+		'13' => 'Mùi',
+		'14' => 'Mùi',
+		'15' => 'Thân',
+		'16' => 'Thân',
+		'17' => 'Dậu',
+		'18' => 'Dậu',
+		'19' => 'Tuất',
+		'20' => 'Tuất',
+		'21' => 'Hợi',
+		'22' => 'Hợi',
+		'23' => 'Tý',
+	];
+	$soGio = array_search($gio[$time[3]],$diaChi) + 1;
+
+	$queThuong = ($soNam + $time[0] + $time[1]) % 8;
+	if($queThuong == 0){
+		$queThuong = 8;
+	}
+	$queHa = ($soNam + $time[0] + $time[1] + $soGio) % 8;
+	if($queHa == 0){
+		$queHa = 8;
+	}
+	$haoDong = ($soNam + $time[0] + $time[1] + $soGio) % 6;
+	if($haoDong == 0){
+		$haoDong = 6;
+	}
+	return [
+		'thuong' => $queThuong,
+		'ha' => $queHa,
+		'dong' => $haoDong,
+
+	];
 }
 
 

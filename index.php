@@ -238,19 +238,21 @@ $nguHanh = [
 // x(canhGio(13));
 // x($homNayAm);
 
- $al = $capsule->table('amLich')->get();
- x($al);
 
-// $gioGieo = 'Nhâm Tý';
+
+ $al = $capsule->table('amLich')->get();
+
+$gioGieo = $al[0]->gio;
 $ngayGieo = $al[0]->ngay;
 $thangGieo = $al[0]->thang;
-// $namGieo = 'Kỷ Mùi';
+$namGieo = $al[0]->nam;
 
-$haoDong = 3;
-$queChinh = queChinh($batQuai, $quePhucHy, 4, 3);
-$queChinh = ['dataName' => 'Quẻ Chính','que' => '101011'];
+$maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
+
+$haoDong = $maiHoa['dong'];
+$queChinh = queChinh($batQuai, $quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 $queChinhArr = str_split($queChinh['que'], 1);
-x($queChinh);
+// x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
 // x($queHo);
 
@@ -258,23 +260,23 @@ $queBien = queBien($queChinh['que'],$haoDong, $quePhucHy);
 $queBienArr = str_split($queBien['que'], 1);
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
-x($gd);
+// x($gd);
 
 $tc = thienCan($queChinh['que'],$quePhucHy,$thienCan);
-x($tc);
+// x($tc);
 
 $dc = diaChi($queChinh['que'],$quePhucHy,$diaChi);
-x($dc);
+// x($dc);
 
 $dcnh = diaChiNguHanh($dc['diaChi'],$conGiapNguHanh);
-x($dcnh);
+// x($dcnh);
 
 $lt = lucthan($gd['nguHanh'],$dcnh);
-x($lt);
+// x($lt);
 
-xd(tuyetMo('Hợi',"Tỵ"));
+// xd(tuyetMo('Hợi',"Tỵ"));
 
-x(conGiapThang(5));
+// x(conGiapThang(5));
 
 
 
@@ -282,7 +284,7 @@ $kv = tuanKhong($ngayGieo);
 
 $lucThu = lucThu($ngayGieo);
 
-x(vongTruongSinh('Kim'));
+// x(vongTruongSinh('Kim'));
 
 ?>
 <!DOCTYPE html>
@@ -300,13 +302,15 @@ x(vongTruongSinh('Kim'));
 <body>
       <hr>
       <h4>Giờ <b><?= $al[0]->gio ?></b>, ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b></h4>
+      <hr>
 <a class='btn btn-success' href="getNgay.php">Cập nhật Thời gian</a>
+<hr>
 
 
       <table class="table table-hover">
             <tr>
                   <th>
-                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['que'] ?></span>
+                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['tenQue'] ?></span>
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
                   </th>
                   <th>Thế</th>
@@ -564,7 +568,6 @@ x(vongTruongSinh('Kim'));
                         <th>Đối tượng 1</th>
                         <th>Đối tượng 2</th>
                         <th></th>
-                        <th>Kết Quả</th>
                   </tr>
                   <tr>
                         <td>
