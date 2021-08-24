@@ -291,12 +291,46 @@ array_pop($homNayAm);
 array_push($homNayAm, $homNay->hour);
 array_push($homNayAm, $homNay->minute);
 
-function queChinh($bQ, $quePH, $ha, $thuong){
+function queChinh($quePH, $ha, $thuong){
+	$bQ = [
+		'111',
+		'110' ,
+		'101',    
+		'100' ,
+		'011' ,   
+		'010' ,
+		'001' ,  
+		'000' ,
+	];
+	$bqTen = [
+		'111' => 'Càn',
+		'110' => 'Đoài',
+		'101' => 'Ly',
+		'100' => 'Chấn',
+		'011' => 'Tốn',
+		'010' => 'Khảm',
+		'001' => 'Cấn',
+		'000' => 'Khôn',
+	];
+	$bqng = [
+		'111' => 'Kim',
+		'110' => 'Kim',
+		'101' => 'Hỏa',
+		'100' => 'Mộc',
+		'011' => 'Mộc',
+		'010' => 'Thủy',
+		'001' => 'Thổ',
+		'000' => 'Thổ',
+	];
       $que = $bQ[$ha-1].$bQ[$thuong-1];
       return [
 		'dataName' => 'Quẻ Chính',
             "que" => $que,
-            'tenQue' => $quePH[$que]
+            'tenQue' => $quePH[$que],
+		'thuong' => $bqTen[$bQ[$thuong-1]],
+		'nguHanhThuong' => $bqng[$bQ[$thuong-1]],
+		'ha' => $bqTen[$bQ[$ha-1]],
+		'nguHanhHa' => $bqng[$bQ[$ha-1]],
       ];
 }
 
@@ -636,20 +670,20 @@ function tuyetMo($c1, $c2){
 		'Tuất' => ['Tỵ','Thìn'],
 		'Hợi' => ['Tỵ','Thìn'],//
 	];
+	
 	$kq = [
-		'ketQua' => "khong",
-		'luan' => ''
+		'ketQua' => '0',
+		'luan' => $c1.", ".$c2.' Không tuyệt, không mộ'
 	];
-	$kq = $c1.", ".$c2.' Không tuyệt, không mộ';
 	if(in_array($c2, $tuyetMo[$c1])){
 		if(array_search($c2, $tuyetMo[$c1]) == 0){
 			$kq = [
-				'ketQua' => "2t1",
-				'luan' => $c2." tuyệt tại ".$c1
+				"ketQua" => "2t1",
+				"luan" => $c2." tuyệt tại ".$c1
 			];
 		}elseif(array_search($c2, $tuyetMo[$c1]) == 1){
 			$kq = [
-				'ketQua' => "2m1",
+				"ketQua" => "2m1",
 				"luan" => $c2." mộ tại ".$c1
 			];
 		}
@@ -658,13 +692,13 @@ function tuyetMo($c1, $c2){
 	if(in_array($c1, $tuyetMo[$c2])){
 		if(array_search($c1, $tuyetMo[$c2]) == 0){
 			$kq = [
-				'ketQua' => "1t2",
-				'luan' => $c1." tuyệt tại ".$c2
+				"ketQua" => "1t2",
+				"luan" => $c1." tuyệt tại ".$c2
 			];
 		}elseif(array_search($c1, $tuyetMo[$c2]) == 1){
 			$kq = [
-				'ketQua' => "1m2",
-				'luan' => $c1." mộ tại ".$c2
+				"ketQua" => "1m2",
+				"luan" => $c1." mộ tại ".$c2
 			];
 		}
 	}

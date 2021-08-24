@@ -26,6 +26,10 @@ if($loai == 'diaChi'){
       if(tamHinh($dt1, $dt2)){
             array_push($a,'Tam Hình');
       }
+      $b = tuyetMo($dt1, $dt2);
+      if($b['ketQua'] != '0'){
+            array_push($a, $b['luan']);
+      }
       echo "$dt1 so với $dt2 : ";
       foreach($a as $kq){
             echo $kq.", ";

@@ -247,13 +247,20 @@ $ngayGieo = $al[0]->ngay;
 $thangGieo = $al[0]->thang;
 $namGieo = $al[0]->nam;
 
+$a = explode(' ', $ngayGieo);
+$nhat = $a[1];
+$a = explode(' ', $thangGieo);
+$nguyet = $a[1];
+$a = explode(' ', $namGieo);
+$tue = $a[1];
+
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
 // x($maiHoa);
 
 $haoDong = $maiHoa['dong'];
-$queChinh = queChinh($batQuai, $quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+$queChinh = queChinh($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 $queChinhArr = str_split($queChinh['que'], 1);
-// x($queChinh);
+x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
 // x($queHo);
 
@@ -261,21 +268,21 @@ $queBien = queBien($queChinh['que'],$haoDong, $quePhucHy);
 $queBienArr = str_split($queBien['que'], 1);
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
-// x($gd);
+ x($gd);
 
 $tc = thienCan($queChinh['que'],$quePhucHy,$thienCan);
-// x($tc);
+ x($tc);
 
 $dc = diaChi($queChinh['que'],$quePhucHy,$diaChi);
-// x($dc);
+ x($dc);
 
 $dcnh = diaChiNguHanh($dc['diaChi'],$conGiapNguHanh);
-// x($dcnh);
+ x($dcnh);
 
 $lt = lucthan($gd['nguHanh'],$dcnh);
 // x($lt);
 
-// xd(tuyetMo('Hợi',"Tỵ"));
+xd(tuyetMo('Ngọ',"Tỵ"));
 
 // x(conGiapThang(5));
 
@@ -322,7 +329,8 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
             <tr>
                   <th>
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['tenQue'] ?></span>
-                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
+                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?></span>
+                        
                   </th>
                   <th>T/Ư</th>
                   <th>Địa chi</th>
@@ -502,7 +510,9 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
       <div id="data"></div>
 
       <div class="container">
-            <div id='ketquass'></div>
+            <div id='ketquass'>
+            <?= $queChinh['ha']." ".$queChinh['nguHanhHa']." -> ".$queChinh['thuong']." ".$queChinh['nguHanhThuong'].", " ?>
+            </div>
             <hr>
             <input type="text" id='comment' class='form-control'>
             <hr>
@@ -650,6 +660,21 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
                         }
                          // missing closing if brace
                   });
+
+                  $.post('sosanh.php', {
+                              loai: 'nguHanh',
+                              dt1: '<?= $queChinh['nguHanhHa'] ?>',
+                              dt2: '<?= $queChinh['nguHanhThuong'] ?>',
+                        },(data) =>{
+                              $('#ketquass').append(data);
+                        })
+                  $.post('sosanh.php', {
+                        loai: 'nguHanh',
+                        dt1: '<?= $queChinh['nguHanhHa'] ?>',
+                        dt2: '<?= $queChinh['nguHanhThuong'] ?>',
+                  },(data) =>{
+                        $('#ketquass').append(data);
+                  })
 
                   
             });
