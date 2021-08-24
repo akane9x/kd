@@ -255,7 +255,7 @@ $a = explode(' ', $namGieo);
 $tue = $a[1];
 
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
-// x($maiHoa);
+x($maiHoa);
 
 $haoDong = $maiHoa['dong'];
 $queChinh = queChinh($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
@@ -269,6 +269,9 @@ $queBienArr = str_split($queBien['que'], 1);
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
  x($gd);
+ $the = $gd['haoThe'] -1;
+ $ung = $gd['haoUng'] -1;
+ x($ung);
 
 $tc = thienCan($queChinh['que'],$quePhucHy,$thienCan);
  x($tc);
@@ -511,7 +514,18 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
 
       <div class="container">
             <div id='ketquass'>
-            <?= $queChinh['ha']." ".$queChinh['nguHanhHa']." -> ".$queChinh['thuong']." ".$queChinh['nguHanhThuong'].", " ?>
+                  <div id='queDon'>
+                  <?= $queChinh['ha']." ".$queChinh['nguHanhHa']." -> ".$queChinh['thuong']." ".$queChinh['nguHanhThuong'].", " ?>
+                  </div>
+                  <div id='haoThe'>
+                        <b>Hào Thế</b><br>
+                  </div>
+                  <div id='haoUng'>
+                        <b>Hào Ứng</b><br>
+                  </div>
+                  <div id='haoDong'>
+                        <b>Hào Động</b><br>
+                  </div>
             </div>
             <hr>
             <input type="text" id='comment' class='form-control'>
@@ -550,7 +564,7 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
                                           <option value="Thổ">Thổ</option>
                                     </select>
                         </td>
-                        <td><button type="submit" class='btn btn-success' id='sosanh'>So Sánh</button></td>
+                        <td><button type="submit" class='btn btn-success' >So Sánh</button></td>
                   </tr>
             </table>
             </form>
@@ -666,15 +680,106 @@ $ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
                               dt1: '<?= $queChinh['nguHanhHa'] ?>',
                               dt2: '<?= $queChinh['nguHanhThuong'] ?>',
                         },(data) =>{
-                              $('#ketquass').append(data);
+                              $('#queDon').append(data);
                         })
+                  // Hao the
                   $.post('sosanh.php', {
-                        loai: 'nguHanh',
-                        dt1: '<?= $queChinh['nguHanhHa'] ?>',
-                        dt2: '<?= $queChinh['nguHanhThuong'] ?>',
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$the] ?>',
+                        dt2: '<?= $tue ?>',
                   },(data) =>{
-                        $('#ketquass').append(data);
+                        $('#haoThe').append('Tuế: '+data);
                   })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$the] ?>',
+                        dt2: '<?= $nguyet ?>',
+                  },(data) =>{
+                        $('#haoThe').append('Nguyệt: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$the] ?>',
+                        dt2: '<?= $nhat ?>',
+                  },(data) =>{
+                        $('#haoThe').append('Nhật: '+data);
+                  })
+                  //hao Ung
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$ung] ?>',
+                        dt2: '<?= $tue ?>',
+                  },(data) =>{
+                        $('#haoUng').append('Tuế: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$ung] ?>',
+                        dt2: '<?= $nguyet ?>',
+                  },(data) =>{
+                        $('#haoUng').append('Nguyệt: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$ung] ?>',
+                        dt2: '<?= $nhat ?>',
+                  },(data) =>{
+                        $('#haoUng').append('Nhật: '+data);
+                  })
+
+                   //hao dong
+                   $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $tue ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Tuế: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $nguyet ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Nguyệt: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dc['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $nhat ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Nhật: '+data);
+                  })
+
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dcQueBien['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $nhat ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Biến: '+data);
+                  })
+
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dcQueBien['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $tue ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Biến Tuế: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dcQueBien['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $nguyet ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Biến Nguyệt: '+data);
+                  })
+                  $.post('sosanh.php', {
+                        loai: 'diaChi',
+                        dt1: '<?= $dcQueBien['diaChi'][$haoDong -1] ?>',
+                        dt2: '<?= $nhat ?>',
+                  },(data) =>{
+                        $('#haoDong').append('Biến Nhật: '+data);
+                  })
+
 
                   
             });

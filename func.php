@@ -636,11 +636,18 @@ function tamHinh($c1, $c2){
 		elseif($i == 1 || $i == 2){
 			if(in_array($c1, $tamHinh[$i])){
 				if(in_array($c2, $tamHinh[$i])){
-					if(array_search($c1,$tamHinh[$i]) < array_search($c2,$tamHinh[$i])){
+					$a = array_search($c1,$tamHinh[$i]);
+					$b =  array_search($c2,$tamHinh[$i]);
+
+					if($a == 0 && $b == 1){
 						$hinh = $c1." hình ".$c2;
-					}else{
-						$hinh = $c2." hình ".$c1;
+					}elseif($a == 1 && $b == 2){
+						$hinh = $c1." hình ".$c2;
+					}elseif($a == 2 && $b == 0){
+						$hinh = $c1." hình ".$c2;
 					}
+
+					
 				}
 			}
 		}elseif($i == 3){
