@@ -175,7 +175,7 @@ $diaChi = [
                   'Dần', 'Thìn','Ngọ'
             ],
             [
-                  'Thân','Tuấn','Tý'
+                  'Thân','Tuất','Tý'
             ]
       ],// khảm
       '001' => [
@@ -248,6 +248,7 @@ $thangGieo = $al[0]->thang;
 $namGieo = $al[0]->nam;
 
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
+// x($maiHoa);
 
 $haoDong = $maiHoa['dong'];
 $queChinh = queChinh($batQuai, $quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
@@ -286,6 +287,16 @@ $lucThu = lucThu($ngayGieo);
 
 // x(vongTruongSinh('Kim'));
 
+$gdQueBien = giaDinh($queBien['que'],$quePhucHy,$batQuaiNguHanh);
+
+$tcQueBien = thienCan($queBien['que'],$quePhucHy,$thienCan);
+
+$dcQueBien = diaChi($queBien['que'],$quePhucHy,$diaChi);
+
+$dcnhQueBien = diaChiNguHanh($dcQueBien['diaChi'],$conGiapNguHanh);
+
+$ltQueBien = lucthan($gdQueBien['nguHanh'],$dcnhQueBien);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -301,9 +312,9 @@ $lucThu = lucThu($ngayGieo);
 </head>
 <body>
       <hr>
-      <h4>Giờ <b><?= $al[0]->gio ?></b>, ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b></h4>
-      <hr>
-<a class='btn btn-success' href="getNgay.php">Cập nhật Thời gian</a>
+      <h5>Giờ <b><?= $al[0]->gio ?></b>, ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
+
+      
 <hr>
 
 
@@ -313,16 +324,24 @@ $lucThu = lucThu($ngayGieo);
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['tenQue'] ?></span>
                         <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
                   </th>
-                  <th>Thế</th>
-                  <th>Ứng</th>
-                  <th>Động</th>
+                  <th>T/Ư</th>
                   <th>Địa chi</th>
                   <th>KV</th>
-                  <th>Ngũ Hành</th>
                   <th>Thân</th>
                   <th>Thú</th>
                   <th>TS Ngày</th>
                   <th>TS Tháng</th>
+                  <!-- que bien  -->
+                  <th>
+                                    <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>
+                                    <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $gdQueBien['nguHanh'] ?>
+                              </th>
+                              
+                              <th>Địa chi</th>
+                              <th>KV</th>
+                              <th>Thân</th>
+                              <th>TS Ngày</th>
+                              <th>TS Tháng</th>
             </tr>
             <?php
                   for($i =5 ; $i >= 0; $i--):
@@ -358,25 +377,21 @@ $lucThu = lucThu($ngayGieo);
                                           if($i == $gd['haoThe'] - 1){
                                           echo "Thế";
                                           }
-                                    ?>
-                                    </td>
-                                    <td>
+                                          ?>
                                           <?php
                                                 if($i == $gd['haoUng'] - 1){
                                                       echo "Ứng";
                                                 }
                                           ?>
+                                          
                                     </td>
-                                    <td>
-                                          <?php
-                                                if($i == $haoDong - 1){
-                                                      echo "Động";
-                                                }
-                                          ?>
-                                    </td>
+                                    
                                     <td>
                                           <?php
                                                 echo $dc['diaChi'][$i];
+                                                echo " - ";
+                                                $mau = mauNguHanh($dcnh['nguHanh'][$i]);
+                                                echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
                                           ?>
                                     </td>
                                     <td>
@@ -386,12 +401,7 @@ $lucThu = lucThu($ngayGieo);
                                                 }
                                           ?>
                                     </td>
-                                    <td>
-                                          <?php
-                                                $mau = mauNguHanh($dcnh['nguHanh'][$i]);
-                                                echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
-                                          ?>
-                                    </td>
+                                   
                                     <td>
                                           <?php
                                                 echo $lt['lucThan'][$i];
@@ -417,48 +427,6 @@ $lucThu = lucThu($ngayGieo);
                                                       echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
                                           ?>
                                     </td>
-                              </tr>
-
-                              
-                              
-                        <?php
-                  endfor;
-                  ?> 
-                        <tr>
-                              <td colspan='11'><hr></td>
-                        </tr>
-                        <tr>
-                                    <?php
-                                          $gd = giaDinh($queBien['que'],$quePhucHy,$batQuaiNguHanh);
-                                          
-                                          $tc = thienCan($queBien['que'],$quePhucHy,$thienCan);
-                                          
-                                          $dc = diaChi($queBien['que'],$quePhucHy,$diaChi);
-                                          
-                                          $dcnh = diaChiNguHanh($dc['diaChi'],$conGiapNguHanh);
-                                          
-                                          $lt = lucthan($gd['nguHanh'],$dcnh);
-                                    ?>
-                              <th>
-                                    <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>
-                                    <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $gd['nguHanh'] ?>
-                              </th>
-                              <th>Thế</th>
-                              <th>Ứng</th>
-                              <th>Động</th>
-                              <th>Địa chi</th>
-                              <th>KV</th>
-                              <th>Ngũ Hành</th>
-                              <th>Thân</th>
-                              <th>Thú</th>
-                              <th>TS Ngày</th>
-                              <th>TS Tháng</th>
-                        </tr>
-                  <?php
-                  for($i = 5; $i>=0; $i--){
-                        ?>
-                              <tr>
-                                    
 
                                     <td>
                                           <?php
@@ -485,60 +453,33 @@ $lucThu = lucThu($ngayGieo);
                                                 }
                                           ?>
                                     </td>
-                                    <td>
-                                          <?php 
-                                          if($i == $gd['haoThe'] - 1){
-                                          echo "Thế";
-                                          }
-                                    ?>
-                                    </td>
+                                   
                                     <td>
                                           <?php
-                                                if($i == $gd['haoUng'] - 1){
-                                                      echo "Ứng";
-                                                }
+                                                echo $dcQueBien['diaChi'][$i];
+                                                echo " - ";
+                                                $mau = mauNguHanh($dcnhQueBien['nguHanh'][$i]);
+                                                echo "<span class='badge bg-$mau'>".$dcnhQueBien['nguHanh'][$i]."</span>";
                                           ?>
                                     </td>
                                     <td>
                                           <?php
-                                                if($i == $haoDong - 1){
-                                                      echo "Động";
-                                                }
-                                          ?>
-                                    </td>
-                                    <td>
-                                          <?php
-                                                echo $dc['diaChi'][$i];
-                                          ?>
-                                    </td>
-                                    <td>
-                                          <?php
-                                                 if(in_array($dc['diaChi'][$i],$kv['khongVong'])){
+                                                 if(in_array($dcQueBien['diaChi'][$i],$kv['khongVong'])){
                                                       echo "KV";
                                                 }
                                           ?>
                                     </td>
+                                    
                                     <td>
                                           <?php
-                                                $mau = mauNguHanh($dcnh['nguHanh'][$i]);
-                                                echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
-                                          ?>
-                                    </td>
-                                    <td>
-                                          <?php
-                                                echo $lt['lucThan'][$i];
-                                          ?>
-                                    </td>
-                                    <td>
-                                          <?php
-                                                echo $lucThu['lucThu'][$i];
+                                                echo $ltQueBien['lucThan'][$i];
                                           ?>
                                     </td>
                                     <td>
                                           <?php
                                                 $dcNgay = explode(' ', $ngayGieo);
                                                 $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
-                                                echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                                echo "<p>".$vts[$dcQueBien['diaChi'][$i]]."</p>";
                                                 
                                           ?>
                                     </td>
@@ -546,20 +487,24 @@ $lucThu = lucThu($ngayGieo);
                                           <?php
                                                 $dcThang = explode(' ', $thangGieo);
                                                 $vts = vongTruongSinh(nguHanhTheoDiaChi($dcThang[1]));
-                                                      echo "<p>".$vts[$dc['diaChi'][$i]]."</p>";
+                                                      echo "<p>".$vts[$dcQueBien['diaChi'][$i]]."</p>";
                                           ?>
                                     </td>
-
                               </tr>
+
+                              
+                              
                         <?php
-                  }
-            ?>
+                  endfor;
+                  ?> 
       </table>
 
       <div id="data"></div>
 
       <div class="container">
             <div id='ketquass'></div>
+            <hr>
+            <input type="text" id='comment' class='form-control'>
             <hr>
             <form id='sosanh' action="sosanh.php" method='post'>
             <table class="table">
@@ -695,6 +640,16 @@ $lucThu = lucThu($ngayGieo);
                               $('#ketquass').append(data);
                         })
                   })
+                  $("#comment").keyup(function(e){ 
+                        var code = e.key; // recommended to use e.key, it's normalized across devices and languages
+                        if(code==="Enter") {
+                              e.preventDefault()
+                              $('#ketquass').append($('#comment').val())
+                              $('#ketquass').append('<br>')
+                              $('#comment').val('')
+                        }
+                         // missing closing if brace
+                  });
 
                   
             });
