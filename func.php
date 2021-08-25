@@ -481,6 +481,7 @@ function diaChiNguHanh($diaChiQue, $conGiapNguHanh){
 
 function nguHanhSinhKhac($nguHanhQue, $nguHanhHao){
       $a = '';
+	$kq = false;
       if($nguHanhQue == $nguHanhHao) $a = 'Trùng';
       $nguHanh = [
             'Kim' => ['Sinh' => 'Thủy','Khắc' => 'Mộc', 'Được Sinh' => 'Thổ', 'Bị Khắc' => "Hỏa"],
@@ -492,24 +493,28 @@ function nguHanhSinhKhac($nguHanhQue, $nguHanhHao){
       foreach($nguHanh[$nguHanhQue] as $c => $v){
             if($v == $nguHanhHao){
                   $a = $c;
+			$kq = true;
             }
       }
-      return $a;
+      return [
+		'ketQua' => $kq,
+		'luan' => $a
+	];
 }
 
 function lucThan($nguHanhQue, $diaChiQue){
       $a = [];
       for($i = 0; $i < 6; $i++){
             $ss = nguHanhSinhKhac($nguHanhQue, $diaChiQue['nguHanh'][$i]);
-            if($ss == 'Trùng'){
+            if($ss['luan'] == 'Trùng'){
                   array_push($a,'Huynh Đệ');
-            }elseif($ss == 'Sinh'){
+            }elseif($ss['luan'] == 'Sinh'){
                   array_push($a,'Tử Tôn');
-            }elseif($ss == 'Khắc'){
+            }elseif($ss['luan'] == 'Khắc'){
                   array_push($a,'Thê Tài');
-            }elseif($ss == 'Được Sinh'){
+            }elseif($ss['luan'] == 'Được Sinh'){
                   array_push($a,'Phụ Mẫu');
-            }elseif($ss == 'Bị Khắc'){
+            }elseif($ss['luan'] == 'Bị Khắc'){
                   array_push($a,'Quan Quỷ');
             }
       }
@@ -519,7 +524,41 @@ function lucThan($nguHanhQue, $diaChiQue){
 	];
 }
 
-function LucThanSinhKhac($lt1, $lt2){
+// function lucThanSinhKhac($a, $b){
+// 	$lucThan = [
+// 		'Huynh Đệ',
+// 		'Tử Tôn',
+// 		'Thê Tài',
+// 		'Quan Quỷ',
+// 		'Phụ Mẫu',
+// 		'Huynh Đệ',
+// 		'Tử Tôn',
+// 		'Thê Tài',
+// 		'Quan Quỷ',
+// 		'Phụ Mẫu',
+// 	];
+// 	$luan = '';
+// 	$c = array_search($a, $lucThan);
+// 	$d = array_search($b, $lucThan);
+
+// 	if($d == $c +1){
+// 		$luan = "$a sinh $b";
+// 	}elseif($d == $c +2){
+// 		$luan = "$a Khắc $b";
+// 	}elseif($d == $c +3){
+// 		$luan = "$b Khắc $a";
+// 	}elseif($d == $c +4){
+// 		$luan = "$b Sinh $a";
+// 	}
+
+// 	return [
+// 		'ketQua' => true,
+// 		'luan' => $luan
+// 	];
+// }
+
+
+function lucThanSinhKhac($lt1, $lt2){
       $a = '';
       if($lt1 == $lt2) $a = 'Trùng';
       $lucThan = [
@@ -534,15 +573,18 @@ function LucThanSinhKhac($lt1, $lt2){
                   $a = $c;
             }
       }
-      return $a;
+      return [
+		'ketQua' =>true,
+		'luan' => $a
+	];
 }
 
-function tamHop($c1, $c2){
+function tamHop($c1, $c2, $all){
 	$tamHop = [
-		['Thân','Tý','Thìn'], // thủy cục
-		['Dần','Ngọ','Tuất'], //Hỏa cục
-		['Hợi', 'Mão', 'Mùi'], // Mộc cục
-		['Tỵ', 'Dậu','Sửu'] // kim cục
+		['Thân','Tý','Thìn','Thủy Cục'], // thủy cục
+		['Dần','Ngọ','Tuất','Hỏa Cục'], //Hỏa cục
+		['Hợi', 'Mão', 'Mùi', 'Mộc Cục'], // Mộc cục
+		['Tỵ', 'Dậu','Sửu','Kim Cục'] // kim cục
 		// trường sinh -- đế vượng -- mộ (xoay trong vòng trường sinh)
 	];
 	$kq = false;
@@ -550,8 +592,15 @@ function tamHop($c1, $c2){
 	foreach($tamHop as $th){
 		if(in_array($c1, $th)){
 			if(in_array($c2, $th)){
-				$kq = true;
-				$luan = "$c1 và $c2 tam hợp";
+
+				$dem = array_count_values($all);
+
+				if($dem[$c1] == 1 && $dem[$c2] == 1 && $dem[$th[1]] == 1){
+					$kq = true;
+					$luan = "$c1 và $c2 tam hợp tạo $th[3]";
+				}
+
+				
 
 			}
 		}

@@ -2,76 +2,42 @@
 
 require_once('func.php');
 
-$loai = $_POST['loai'];
-$dt1 = $_POST['dt1'];
-$dt2 = $_POST['dt2'];
+$loaiTT = $_POST['loaiTT'];
+$a = $_POST['dt1'];
+$b = $_POST['dt2'];
 
+$allDC = $capsule->table('diaChi')->get();
+$diaChi = $allDC[0]->dc;
+$diaChi = json_decode($diaChi);
 
-
-
-if($dt1 == $dt2){
-      $a = "...";
-      echo "$dt1 so với $dt2 : ";
-      echo $a;
-      echo '<br>';
-}else{
-      if($loai == 'diaChi'){
-            $tamHop = tamHop($dt1, $dt2);
-            $nhiHop = nhiHop($dt1, $dt2);
-            $nhiHai = nhiHai($dt1, $dt2);
-            $nhiXung = nhiXung($dt1, $dt2);
-            $tamHinh = tamHinh($dt1, $dt2);
-            $tuHinh = tuHinh($dt1, $dt2);
-            $tuyetMo = tuyetMo($dt1, $dt2);
-
-            $a = [];
-           if($tamHop['ketQua']){
-                 array_push($a,$tamHop['luan']);
-           }
-           if($nhiHop['ketQua']){
-                  array_push($a,$nhiHop['luan']);
-            }
-      
-            if($nhiHai['ketQua']){
-                  array_push($a,$nhiHai['luan']);
-            }
-      
-            if($nhiXung['ketQua']){
-                  array_push($a,$nhiXung['luan']);
-            }
-      
-            if($tamHinh['ketQua']){
-                  array_push($a,$tamHinh['luan']);
-            }
-            if($tuHinh['ketQua']){
-                  array_push($a,$tuHinh['luan']);
-            }
-
+if($a != $b){
+      if($loaiTT == 'nguHanh'){
+            $c = nguHanhSinhKhac($a, $b);
+            echo $c['luan']; 
+      }elseif($loaiTT == 'diaChi'){
+            $tuyetMo = tuyetMo($a, $b);
             if($tuyetMo['ketQua']){
-                  array_push($a,$tuyetMo['luan']);
-            }
-            echo "$dt1 so với $dt2 : ";
-            if(count($a) > 0){
-                  foreach($a as $kq){
-                        echo $kq.", ";
-                        
-                  }
+                  echo $tuyetMo['luan'];
             }else{
-                  echo "...";
+                  $tamHop = tamHop($a, $b, $diaChi);
+                  if($tamHop['ketQua']){
+                        echo $tamHop['luan'];
+                  }else{
+                        $nhiXung = nhiXung($a, $b);
+                        if($nhiXung['ketQua']){
+                              echo $nhiXung['luan'];
+                        }else{
+                              $d = nguHanhTheoDiaChi($a);
+                              $e = nguHanhTheoDiaChi($b);
+                              $nhsk = nguHanhSinhKhac($d, $e);
+                              if($nhsk['ketQua']){
+                                    echo "$a ".$nhsk['luan']." $b";
+                              }
+                        }
+                  }
             }
-            echo "<br>";
-      
-      
-      }elseif($loai == 'nguHanh'){
-            $a = nguHanhSinhKhac($dt1,$dt2);
-            echo "$dt1 so với $dt2 : ";
-            echo $a;
-            echo '<br>';
-      
-      }elseif($loai == 'lucThan'){
-            $a = LucThanSinhKhac($dt1, $dt2);
-            echo "$dt1 so với $dt2 : ";
-            echo $a;
-            echo '<br>';
+      }elseif($loaiTT == 'lucThan'){
+            $lt = lucThanSinhKhac($a, $b);
+            echo $lt['luan'];
       }
 }
