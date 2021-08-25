@@ -545,15 +545,21 @@ function tamHop($c1, $c2){
 		['Tỵ', 'Dậu','Sửu'] // kim cục
 		// trường sinh -- đế vượng -- mộ (xoay trong vòng trường sinh)
 	];
-	$hop = false;
+	$kq = false;
+	$luan = '';
 	foreach($tamHop as $th){
 		if(in_array($c1, $th)){
 			if(in_array($c2, $th)){
-				$hop = true;
+				$kq = true;
+				$luan = "$c1 và $c2 tam hợp";
+
 			}
 		}
 	}
-	return $hop;
+	return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
 }
 
 function nhiHop($c1, $c2){
@@ -565,15 +571,20 @@ function nhiHop($c1, $c2){
 		['Tỵ','Thân'],
 		['Ngọ','Mùi'],
 	];
-	$hop = false;
+	$kq = false;
+	$luan = '';
 	foreach($nhiHop as $nh){
 		if(in_array($c1, $nh)){
 			if(in_array($c2, $nh)){
-				$hop = true;
+				$kq = true;
+				$luan = "$c1 và $c2 nhị hợp";
 			}
 		}
 	}
-	return $hop;
+	return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
 }
 
 function nhiHai($c1, $c2){
@@ -585,15 +596,20 @@ function nhiHai($c1, $c2){
 		['Dần','Tỵ'],
 		['Mão','Thìn'],
 	];
-	$hai = false;
+	$kq = false;
+	$luan = '';
 	foreach($nhiHai as $nh){
 		if(in_array($c1, $nh)){
 			if(in_array($c2, $nh)){
-				$hai = true;
+				$kq = true;
+				$luan = "$c1 và $c2 hại nhau";
 			}
 		}
 	}
-	return $hai;
+	return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
 }
 
 function nhiXung($c1, $c2){
@@ -605,61 +621,86 @@ function nhiXung($c1, $c2){
 		['Thìn','Tuất'],
 		['Tỵ','Hợi'],
 	];
-	$xung = false;
+	$kq = false;
+	$luan = '';
 	foreach($nhiXung as $nx){
 		if(in_array($c1, $nx)){
 			if(in_array($c2, $nx)){
-				$xung = true;
+				$kq = true;
+				$luan = "$c1 và $c2 xung nhau";
 			}
 		}
 	}
-	return $xung;
+	return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
+}
+
+function tuHinh($c1, $c2){
+	$tuHinh = [
+		['Tý', 'Mão'],
+		['Thìn','Ngọ','Dậu','Hợi'] //tự hình
+	];
+	$a = '';
+	$b = false;
+	if(in_array($c1,$tuHinh[0])){
+		if(in_array($c2,$tuHinh[0])){
+			$a = "$c1 và $c2 hình nhau";
+			$b = true;
+		}
+	}
+
+	if(in_array($c1,$tuHinh[1])){
+		if($c1 == $c2){
+			$a = "$c1 tự hình";
+			$b = true;
+		}
+	}
+
+
+	return [
+		'ketQua' => $b,
+		'luan' => $a,
+	];
+
 }
 
 function tamHinh($c1, $c2){
 	$tamHinh = [
-		['Tý', 'Mão'],
 		['Dần','Tỵ','Thân'],
 		['Sửu','Tuất','Mùi'],
-		['Thìn','Ngọ','Dậu','Hợi'] //tự hình
 	];
-	$hinh = false;
 
-	for($i = 0; $i < 4; $i++ ){
-		if($i == 0){
-			if(in_array($c1, $tamHinh[$i])){
-				if(in_array($c2, $tamHinh[$i])){
-					$hinh = true;
-				}
-			}
-		}
-		elseif($i == 1 || $i == 2){
+	$kq = false;
+	$luan = '';
+
+	for($i = 0; $i < 2; $i++ ){
 			if(in_array($c1, $tamHinh[$i])){
 				if(in_array($c2, $tamHinh[$i])){
 					$a = array_search($c1,$tamHinh[$i]);
 					$b =  array_search($c2,$tamHinh[$i]);
 
 					if($a == 0 && $b == 1){
-						$hinh = $c1." hình ".$c2;
+						$luan = $c1." hình ".$c2;
+						$kq = true;
 					}elseif($a == 1 && $b == 2){
-						$hinh = $c1." hình ".$c2;
+						$kq = true;
+						$luan = $c1." hình ".$c2;
 					}elseif($a == 2 && $b == 0){
-						$hinh = $c1." hình ".$c2;
+						$kq = true;
+						$luan = $c1." hình ".$c2;
 					}
 
 					
 				}
 			}
-		}elseif($i == 3){
-			if($c1 == $c2){
-				if(in_array($c1, $tamHinh[$i])){
-					$hinh = $c1." tự hình";
-				}
-			}
-		}
 	}
 
-	return $hinh;
+ return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
 }
 
 function tuyetMo($c1, $c2){
@@ -678,38 +719,36 @@ function tuyetMo($c1, $c2){
 		'Hợi' => ['Tỵ','Thìn'],//
 	];
 	
-	$kq = [
-		'ketQua' => '0',
-		'luan' => $c1.", ".$c2.' Không tuyệt, không mộ'
-	];
+	$kq = false;
+	$luan = $c1.", ".$c2.' Không tuyệt, không mộ';
+
 	if(in_array($c2, $tuyetMo[$c1])){
 		if(array_search($c2, $tuyetMo[$c1]) == 0){
-			$kq = [
-				"ketQua" => "2t1",
-				"luan" => $c2." tuyệt tại ".$c1
-			];
+			
+				$kq = true; // "2t1";
+				$luan =  $c2." tuyệt tại ".$c1;
+			
 		}elseif(array_search($c2, $tuyetMo[$c1]) == 1){
-			$kq = [
-				"ketQua" => "2m1",
-				"luan" => $c2." mộ tại ".$c1
-			];
+			$kq = true; //"2m1";
+			$luan = $c2." mộ tại ".$c1;
+			
 		}
 	}
 
 	if(in_array($c1, $tuyetMo[$c2])){
 		if(array_search($c1, $tuyetMo[$c2]) == 0){
-			$kq = [
-				"ketQua" => "1t2",
-				"luan" => $c1." tuyệt tại ".$c2
-			];
+			$kq = true; // "1t2";
+			$luan = $c1." tuyệt tại ".$c2;
+		
 		}elseif(array_search($c1, $tuyetMo[$c2]) == 1){
-			$kq = [
-				"ketQua" => "1m2",
-				"luan" => $c1." mộ tại ".$c2
-			];
+			$kq = true; //"1m2";
+			$luan = $c1." mộ tại ".$c2;
 		}
 	}
-	return $kq;
+	return [
+		'ketQua' => $kq,
+		'luan' => $luan,
+	];
 }
 
 function conGiapThang($thang){

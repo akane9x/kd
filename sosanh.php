@@ -6,6 +6,9 @@ $loai = $_POST['loai'];
 $dt1 = $_POST['dt1'];
 $dt2 = $_POST['dt2'];
 
+
+
+
 if($dt1 == $dt2){
       $a = "...";
       echo "$dt1 so với $dt2 : ";
@@ -13,28 +16,39 @@ if($dt1 == $dt2){
       echo '<br>';
 }else{
       if($loai == 'diaChi'){
+            $tamHop = tamHop($dt1, $dt2);
+            $nhiHop = nhiHop($dt1, $dt2);
+            $nhiHai = nhiHai($dt1, $dt2);
+            $nhiXung = nhiXung($dt1, $dt2);
+            $tamHinh = tamHinh($dt1, $dt2);
+            $tuHinh = tuHinh($dt1, $dt2);
+            $tuyetMo = tuyetMo($dt1, $dt2);
+
             $a = [];
-           if(tamHop($dt1, $dt2)){
-                 array_push($a,'Tam Hợp');
+           if($tamHop['ketQua']){
+                 array_push($a,$tamHop['luan']);
            }
-           if(nhiHop($dt1, $dt2)){
-                  array_push($a,'Nhị Hợp');
+           if($nhiHop['ketQua']){
+                  array_push($a,$nhiHop['luan']);
             }
       
-            if(nhiHai($dt1, $dt2)){
-                  array_push($a,'Nhị Hại');
+            if($nhiHai['ketQua']){
+                  array_push($a,$nhiHai['luan']);
             }
       
-            if(nhiXung($dt1, $dt2)){
-                  array_push($a,'Nhị Xung');
+            if($nhiXung['ketQua']){
+                  array_push($a,$nhiXung['luan']);
             }
       
-            if(tamHinh($dt1, $dt2)){
-                  array_push($a,'Tam Hình');
+            if($tamHinh['ketQua']){
+                  array_push($a,$tamHinh['luan']);
             }
-            $b = tuyetMo($dt1, $dt2);
-            if($b['ketQua'] != '0'){
-                  array_push($a, $b['luan']);
+            if($tuHinh['ketQua']){
+                  array_push($a,$tuHinh['luan']);
+            }
+
+            if($tuyetMo['ketQua']){
+                  array_push($a,$tuyetMo['luan']);
             }
             echo "$dt1 so với $dt2 : ";
             if(count($a) > 0){
