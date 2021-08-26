@@ -689,9 +689,25 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                         var code = e.key; // recommended to use e.key, it's normalized across devices and languages
                         if(code==="Enter") {
                               e.preventDefault()
-                              $('#ketquass').append($('#comment').val())
-                              $('#ketquass').append('<br>')
-                              $('#comment').val('')
+                              let cmmt = $('#comment').val()
+                              let cmmtArr = cmmt.split(' ')
+                              let order = cmmtArr[0];
+                              cmmtArr.shift()
+                              cmmt = cmmtArr.join(' ')
+                              let hao = '';
+                              if(order == 'dong'){
+                                    hao = 'haoDong'
+                              }else if(order =='ung'){
+                                    hao = 'haoUng'
+                              }else if(order == 'the'){
+                                    hao = 'haoThe'
+                              }else if(order == 'dt'){
+                                    hao = 'dungThan'
+                              }else if(order == "que"){
+                                    hao = 'queDon'
+                              }
+                              $('#'+hao).append(" -> "+cmmt);
+                              $("#comment").val('')
                         }
                          // missing closing if brace
                   });
@@ -720,15 +736,15 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                         var code = e.key; // recommended to use e.key, it's normalized across devices and languages
                         if(code==="Enter") {
                               let dt = $('#haoDungThan').val()
-                              let dungThan = [
-                                    'Huynh Đệ','Tử Tôn', 'Thê Tài', 'Quan Quỷ', 'Phụ Mẫu'
-                              ];
-                              let isDungThan = $.inArray(dt, dungThan);
-                              
+                              let dungThan = {
+                                    hd:'Huynh Đệ',tton:'Tử Tôn', ttai:'Thê Tài', qq:'Quan Quỷ', pm:'Phụ Mẫu'
+                              };
+                              let isDungThan = dt in dungThan;
+                              x(isDungThan)
                               if(isDungThan > -1){
-                                    soSanh(dt, '<?= $lt['lucThan'][$the] ?>','lucThan','dungThan', 'Thế: ');
-                                    soSanh(dt, '<?= $lt['lucThan'][$ung] ?>','lucThan','dungThan', 'Ứng: ');
-                                    soSanh(dt, '<?= $lt['lucThan'][$haoDong-1] ?>','lucThan','dungThan', 'Động: ');
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$the] ?>','lucThan','dungThan', 'Thế: ');
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$ung] ?>','lucThan','dungThan', 'Ứng: ');
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$haoDong-1] ?>','lucThan','dungThan', 'Động: ');
                               }
                               //console.log(isDungThan)
                         }
@@ -747,6 +763,7 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                   })
 
             }
+            let x = (a) => { console.log(a)}
       </script>
 
     
