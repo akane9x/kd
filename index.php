@@ -546,6 +546,10 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                   <div id='dungThan' class='col'>
                         <b>Dụng Thần</b><br>
                   </div>
+                  <div id='ssThuCong' class='col'>
+                        <b>So Sánh tay</b><br>
+                  </div>
+
             </div>
             <hr>
             <input type="text" id='comment' class='form-control'>
@@ -678,11 +682,11 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                   $('#sosanh').submit((e) => {
                         e.preventDefault();
                         $.post('sosanh.php', {
-                              loai: $('#loai').val(),
+                              loaiTT: $('#loai').val(),
                               dt1: $('#dt1').val(),
                               dt2: $('#dt2').val(),
                         },(data) =>{
-                              $('#ketquass').append(data);
+                              $('#ssThuCong').append(data);
                         })
                   })
                   $("#comment").keyup(function(e){ 
@@ -705,6 +709,8 @@ x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']))
                                     hao = 'dungThan'
                               }else if(order == "que"){
                                     hao = 'queDon'
+                              }else if(order == "ss"){
+                                    hao = 'ssThuCong'
                               }
                               $('#'+hao).append(" -> "+cmmt);
                               $("#comment").val('')
