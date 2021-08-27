@@ -291,7 +291,7 @@ array_pop($homNayAm);
 array_push($homNayAm, $homNay->hour);
 array_push($homNayAm, $homNay->minute);
 
-function queChinh($quePH, $ha, $thuong){
+function queChinhMaiHoa($quePH, $ha, $thuong){
 	$bQ = [
 		'111',
 		'110' ,
@@ -331,6 +331,52 @@ function queChinh($quePH, $ha, $thuong){
 		'nguHanhThuong' => $bqng[$bQ[$thuong-1]],
 		'ha' => $bqTen[$bQ[$ha-1]],
 		'nguHanhHa' => $bqng[$bQ[$ha-1]],
+      ];
+}
+
+function queChinhLucHao($quePH, $que){
+	$queLH = str_split($que, 3);
+	$ha = $queLH[0];
+	$thuong = $queLH[1];
+	$bQ = [
+		'111',
+		'110' ,
+		'101',    
+		'100' ,
+		'011' ,   
+		'010' ,
+		'001' ,  
+		'000' ,
+	];
+	$bqTen = [
+		'111' => 'Càn',
+		'110' => 'Đoài',
+		'101' => 'Ly',
+		'100' => 'Chấn',
+		'011' => 'Tốn',
+		'010' => 'Khảm',
+		'001' => 'Cấn',
+		'000' => 'Khôn',
+	];
+	$bqng = [
+		'111' => 'Kim',
+		'110' => 'Kim',
+		'101' => 'Hỏa',
+		'100' => 'Mộc',
+		'011' => 'Mộc',
+		'010' => 'Thủy',
+		'001' => 'Thổ',
+		'000' => 'Thổ',
+	];
+      
+      return [
+		'dataName' => 'Quẻ Chính',
+            "que" => $que,
+            'tenQue' => $quePH[$que],
+		'thuong' => $bqTen[$thuong],
+		'nguHanhThuong' => $bqng[$thuong],
+		'ha' => $bqTen[$ha],
+		'nguHanhHa' => $bqng[$ha],
       ];
 }
 
@@ -594,13 +640,12 @@ function tamHop($c1, $c2, $all){
 			if(in_array($c2, $th)){
 
 				$dem = array_count_values($all);
-
-				if($dem[$c1] == 1 && $dem[$c2] == 1 && $dem[$th[1]] == 1){
-					$kq = true;
-					$luan = "$c1 và $c2 tam hợp tạo $th[3]";
+				if(array_key_exists($th[0],$dem) && array_key_exists($th[1],$dem) && array_key_exists($th[2],$dem)){
+					if($dem[$th[0]] == 1 && $dem[$th[1]] == 1 && $dem[$th[2]] == 1){
+						$kq = true;
+						$luan = "$c1 và $c2 tam hợp tạo $th[3]";
+					}
 				}
-
-				
 
 			}
 		}

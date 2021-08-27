@@ -257,8 +257,11 @@ $tue = $a[1];
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
 x($maiHoa);
 
-$haoDong = $maiHoa['dong'];
-$queChinh = queChinh($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+// $haoDong = $maiHoa['dong'];
+// $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+
+$haoDong = 3;
+$queChinh = queChinhLucHao($quePhucHy, '011010');
 $queChinhArr = str_split($queChinh['que'], 1);
 x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
