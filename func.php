@@ -1103,7 +1103,8 @@ function vuongTuong($a, $b){
 
 	return [
 		'ketQua' =>$dem,
-		'luan' =>$kq
+		'luan' =>$kq,
+		'code'=>$dem
 	];
 
 }
@@ -1578,7 +1579,273 @@ function queTuong($a){
 	return $thuVien[$a];
 }
 
-function amDong($t){
+function locThan($can, $dc){
+	$thuVien = [
+		'Giáp' =>  'Dần',
+		'Mậu' =>   'Tị',
+		'Ất' =>  'Mão',
+		'Kỷ' =>  'Ngọ',
+		'Bính' =>  'Tị',
+		'Đinh' =>  'Ngọ',
+		'Nhâm' => 'Hợi',
+		'Quý' => 'Tý',
+		'Canh' =>  'Thân',
+		'Tân' =>  'Dậu',
+	];
+	$kq = false;
+	if($thuVien[$can] == $dc) $kq = true;
+	return $kq;
+	
+}
 
+function quyNhan($can, $dc){
+	$thuVien = [
+		'Giáp' => ['Sửu', 'Mùi'],
+		'Mậu' =>  ['Sửu', 'Mùi'],
+		'Ất' => ['Tý', 'Thân'],
+		'Kỷ' => ['Tý', 'Thân'],
+		'Bính' => ['Hợi', 'Dậu'],
+		'Đinh' => ['Hợi', 'Dậu'],
+		'Nhâm' => ['Mão', 'Tị'],
+		'Quý' => ['Mão', 'Tị'],
+		'Canh' => ['Ngọ', 'Dần'],
+		'Tân' => ['Ngọ', 'Dần'],
+	];
+	$kd = false;
+	if(in_array($dc,$thuVien[$can])) $kd = true;
+
+	return $kd;
+}
+function duongNhan($can, $dc){
+	$thuVien = [
+		'Giáp' =>  'Mão',
+		'Mậu' =>   'Ngọ',
+		'Ất' =>  'Dần',
+		'Kỷ' =>  'Tị',
+		'Bính' =>  'Ngọ',
+		'Đinh' =>  'Tị',
+		'Nhâm' => 'Tý',
+		'Quý' => 'Hợi',
+		'Canh' =>  'Dậu',
+		'Tân' =>  'Thân',
+	];
+	$kq = false;
+	if($thuVien[$can] == $dc) $kq = true;
+	return $kq;
+	
+}
+function vanXuong($can, $dc){
+	$thuVien = [
+		'Giáp' =>  'Tị',
+		'Mậu' =>   'Thân',
+		'Ất' =>  'Ngọ',
+		'Kỷ' =>  'Dậu',
+		'Bính' =>  'Thân',
+		'Đinh' =>  'Dậu',
+		'Nhâm' => 'Dần',
+		'Quý' => 'Mão',
+		'Canh' =>  'Hợi',
+		'Tân' =>  'Tý',
+	];
+	$kq = false;
+	if($thuVien[$can] == $dc) $kq = true;
+	return $kq;
+	
+}
+
+function dichMa($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' => 'Dần',
+		'Sửu' => 'Hợi',
+		'Dần' => 'Thân',
+		'Mão' => 'Tỵ',
+		'Thìn' => 'Dần',
+		'Tỵ' => 'Hợi',
+		'Ngọ' => 'Thân',
+		'Mùi' => 'Tỵ',
+		'Thân' => 'Dần',
+		'Dậu' => 'Hợi',
+		'Tuất' => 'Thân',
+		'Hợi' => 'Tỵ',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+function daoHoa($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' => 'Dậu',
+		'Sửu' => 'Ngọ',
+		'Dần' => 'Mão',
+		'Mão' => 'Tý',
+		'Thìn' => 'Dậu',
+		'Tỵ' => 'Ngọ',
+		'Ngọ' => 'Mão',
+		'Mùi' => 'Tý',
+		'Thân' => 'Dậu',
+		'Dậu' => 'Ngọ',
+		'Tuất' => 'Mão',
+		'Hợi' => 'Tý',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function tuongTinh($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' =>'Tý',
+		'Sửu' =>'Dậu',
+		'Dần' =>'Ngọ',
+		'Mão' =>'Hợi',
+		'Thìn' =>'Tý',
+		'Tỵ' =>'Dậu',
+		'Ngọ' =>'Ngọ',
+		'Mùi' =>'Hợi',
+		'Thân' =>'Tý',
+		'Dậu' =>'Dậu',
+		'Tuất' =>'Ngọ',
+		'Hợi' =>'Hợi',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function kiepSat($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' =>'Tị',
+		'Sửu' =>'Dần',
+		'Dần' =>'Hợi',
+		'Mão' =>'Thân',
+
+		'Thìn' =>'Tị',
+		'Tỵ' =>'Dần',
+		'Ngọ' =>'Hợi',
+		'Mùi' =>'Thân',
+
+		'Thân' =>'Tị',
+		'Dậu' =>'Dần',
+		'Tuất' =>'Hợi',
+		'Hợi' =>'Thân',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function hoaCai($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' =>'Thân',
+		'Sửu' =>'Sửu',
+		'Dần' =>'Tuất',
+		'Mão' =>'Mùi',
+
+		'Thìn' =>'Thân',
+		'Tỵ' =>'Sửu',
+		'Ngọ' =>'Tuất',
+		'Mùi' =>'Mùi',
+
+		'Thân' =>'Thân',
+		'Dậu' =>'Sửu',
+		'Tuất' =>'Tuất',
+		'Hợi' =>'Mùi',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function muuTinh($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' =>'Tuất',
+		'Sửu' =>'Mùi',
+		'Dần' =>'Thìn',
+		'Mão' =>'Sửu',
+
+		'Thìn' =>'Tuất',
+		'Tỵ' =>'Mùi',
+		'Ngọ' =>'Thìn',
+		'Mùi' =>'Sửu',
+
+		'Thân' =>'Tuất',
+		'Dậu' =>'Mùi',
+		'Tuất' =>'Thìn',
+		'Hợi' =>'Sửu',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function thienY($dcThang, $dcHao){
+	$thuVien = [
+		'Tý' ,
+		'Sửu',
+		'Dần',
+		'Mão',
+
+		'Thìn',
+		'Tỵ',
+		'Ngọ',
+		'Mùi',
+
+		'Thân',
+		'Dậu',
+		'Tuất',
+		'Hợi',
+	];
+	$kq = false;
+	for($i = 0; $i < 12; $i++){
+		if($i == 0){
+			if($thuVien[$i] == $dcThang && $thuVien[11] == $dcHao) $kq = true;
+		}elseif($i > 0){
+			if($thuVien[$i] == $dcThang && $thuVien[$i-1] == $dcHao) $kq = true;
+		}
+	}
+	return $kq;
+}
+function thienHy($dcThang, $dcHao){
+	$thuVien = [
+		'Tý' => 'Mùi',
+		'Sửu' => 'Mùi',
+		'Dần' => 'Tuất',
+		'Mão' => 'Tuất',
+
+		'Thìn' => 'Tuất',
+		'Tỵ' => 'Sửu',
+		'Ngọ' => 'Sửu',
+		'Mùi' => 'Sửu',
+
+		'Thân' => 'Thìn',
+		'Dậu' => 'Thìn',
+		'Tuất' => 'Thìn',
+		'Hợi' => 'Mùi',
+	];
+	$kq = false;
+	if($thuVien[$dcThang] == $dcHao) $kq = true;
+	return $kq;
+}
+
+function taiSat($dcNgay, $dcHao){
+	$thuVien = [
+		'Tý' =>'Ngọ',
+		'Sửu' =>'Mão',
+		'Dần' =>'Tý',
+		'Mão' =>'Dậu',
+
+		'Thìn' =>'Ngọ',
+		'Tỵ' =>'Mão',
+		'Ngọ' =>'Tý',
+		'Mùi' =>'Dậu',
+
+		'Thân' =>'Ngọ',
+		'Dậu' =>'Mão',
+		'Tuất' =>'Tý',
+		'Hợi' =>'Dậu',
+	];
+	$kq = false;
+	if($thuVien[$dcNgay] == $dcHao) $kq = true;
+	return $kq;
 }
 

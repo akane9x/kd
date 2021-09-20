@@ -249,13 +249,18 @@ $namGieo = $al[0]->nam;
 
 $a = explode(' ', $ngayGieo);
 $nhat = $a[1];
+$nhatCan = $a[0];
 $a = explode(' ', $thangGieo);
 $nguyet = $a[1];
+$nguyetCan = $a[0];
 $a = explode(' ', $namGieo);
 $tue = $a[1];
+$tueCan = $a[0];
 
 $tong['nhat'] = $nhat;
 $tong['nguyet'] = $nguyet;
+$tong['nhatCan'] = $nhatCan;
+$tong['nguyetCan'] = $nguyetCan;
 // $tong['tue'] = $tue;
 
 //     [0] => 6   
@@ -487,7 +492,8 @@ $tong['hao'][4]['tsThangBien'] = $vtsThang[$tong['hao'][4]['diaChiBien']] ;
 $tong['hao'][5]['tsThangBien'] = $vtsThang[$tong['hao'][5]['diaChiBien']] ;
 
 // x($tong);
-/////////
+
+
 
 $allDC = [$nguyet, $nhat];
 $allDC = array_merge($allDC, $dc['diaChi']);
@@ -499,7 +505,6 @@ $capsule->table('diachi')->where('id','=',1)->update([
       'dc' => $allDCJson,
       
 ]);
-
 
 ?>
 <!DOCTYPE html>
@@ -562,16 +567,18 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Thú</th>
                   <th>TS Ngày</th>
                   <th>TS Tháng</th>
+                  <th>Tinh Sát</th>
                   <!-- que bien  -->
                   <th>
-                                    <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>
-                                    <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $gdQueBien['nguHanh'] ?>
-                              </th>
+                        <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>
+                        <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $gdQueBien['nguHanh'] ?>
+                  </th>
                               
-                              <th>Thân / Địa chi</th>
-                              <th>KV</th>
-                              <th>TS Ngày</th>
-                              <th>TS Tháng</th>
+                  <th>Thân / Địa chi</th>
+                  <th>KV</th>
+                  <th>TS Ngày</th>
+                  <th>TS Tháng</th>
+                  <th>Tinh Sát</th>
             </tr>
             <?php
                   for($i =5 ; $i >= 0; $i--):
@@ -692,6 +699,26 @@ $capsule->table('diachi')->where('id','=',1)->update([
 
                                     <td class='info'>
                                           <?php
+                                                if(quyNhan($tong['nhatCan'],$tong['hao'][$i]['diaChi'])) echo 'Quý<br>';
+                                                if(locThan($tong['nhatCan'],$tong['hao'][$i]['diaChi'])) echo 'Lộc<br>';
+                                                if(duongNhan($tong['nhatCan'],$tong['hao'][$i]['diaChi'])) echo 'Dương<br>';
+                                                if(vanXuong($tong['nhatCan'],$tong['hao'][$i]['diaChi'])) echo 'Văn<br>';
+                                                if(dichMa($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Mã<br>';
+                                                if(daoHoa($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Đào<br>';
+                                                if(tuongTinh($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Tương<br>';
+                                                if(kiepSat($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Kiếp<br>';
+                                                if(hoaCai($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Hoa<br>';
+                                                if(muuTinh($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Mưu<br>';
+                                                if(taiSat($tong['nhat'],$tong['hao'][$i]['diaChi'])) echo 'Tai<br>';
+                                                if(thienY($tong['nguyet'],$tong['hao'][$i]['diaChi'])) echo 'Y<br>';
+                                                if(thienHy($tong['nguyet'],$tong['hao'][$i]['diaChi'])) echo 'Hỷ<br>';
+                                          ?>
+                                    </td>
+
+                                    <!-- que bien -->
+
+                                    <td class='info'>
+                                          <?php
                                                 if(!in_array($i+1,$haoDong)){
                                                       if($queBienArr[$i] == 1){
                                                             ?><p><span class='duong'>&nbsp;</span></p><?php
@@ -757,6 +784,25 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                       echo "<p>".$vtsThang[$dcQueBien['diaChi'][$i]]."</p>";
                                           ?>
                                     </td>
+                                    <td class='info'>
+                                          <?php
+                                                if($tong['hao'][$i]['nghiThuong'] != $tong['hao'][$i]['nghiBien']){
+                                                      if(quyNhan($tong['nhatCan'],$tong['hao'][$i]['diaChiBien'])) echo 'Quý<br>';
+                                                      if(locThan($tong['nhatCan'],$tong['hao'][$i]['diaChiBien'])) echo 'Lộc<br>';
+                                                      if(duongNhan($tong['nhatCan'],$tong['hao'][$i]['diaChiBien'])) echo 'Dương<br>';
+                                                      if(vanXuong($tong['nhatCan'],$tong['hao'][$i]['diaChiBien'])) echo 'Văn<br>';
+                                                      if(dichMa($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Mã<br>';
+                                                      if(daoHoa($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Đào<br>';
+                                                      if(tuongTinh($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Tương<br>';
+                                                      if(kiepSat($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Kiếp<br>';
+                                                      if(hoaCai($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Hoa<br>';
+                                                      if(muuTinh($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Mưu<br>';
+                                                      if(taiSat($tong['nhat'],$tong['hao'][$i]['diaChiBien'])) echo 'Tai<br>';
+                                                      if(thienY($tong['nguyet'],$tong['hao'][$i]['diaChiBien'])) echo 'Y<br>';
+                                                      if(thienHy($tong['nguyet'],$tong['hao'][$i]['diaChiBien'])) echo 'Hỷ<br>';
+                                                }
+                                          ?>
+                                    </td>
                               </tr>
 
                               
@@ -795,16 +841,16 @@ $capsule->table('diachi')->where('id','=',1)->update([
                               <td class='info'><?= 'Hào '.$stt1  ?></td>
                               <td class='info'>
                                     <?php 
-                                          $ss =  sosanhNhatNguyet($tong['nguyet'], $tong['hao'][$i]['diaChi'], $allDC);
+                                          $ss =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['diaChi']));
                                           echo $ss['luan']; 
-                                          if($ss['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3 || $ss['ketQua'] == 6){
+                                          if($ss['code'] == 0 || $ss['code'] == 1 ){
                                                 $amDong[0] = 1;
                                           }
                                     ?>
                               </td>
                               <td class='info'>
                                     <?php 
-                                          $ss1 = sosanhNhatNguyet($tong['nhat'], $tong['hao'][$i]['diaChi'], $allDC);
+                                          $ss1 = sosanhHao($tong['nhat'], $tong['hao'][$i]['diaChi'], $allDC);
                                           echo $ss1['luan']; 
                                           $xung = nhiXung($tong['nhat'], $tong['hao'][$i]['diaChi']);
                                           if($xung['ketQua']){
@@ -918,63 +964,4 @@ $capsule->table('diachi')->where('id','=',1)->update([
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
