@@ -228,15 +228,9 @@ $nguHanh = [
 ];
 
 
-// TA là ngũ hành quẻ gốc
-// Sinh ra ta : Phụ Mẫu
-// Ta sinh ra : Tôn tử
-// ta khắc : Thê Tài
-// Khắc ta : Quan quỉ
-// Cùng ngũ hành : Huynh Đệ
-
 // x(canhGio(13));
-// x($homNayAm);
+//  x($homNayAm);
+
 
  $al = $capsule->table('amlich')->get();
 
@@ -269,15 +263,18 @@ $tong['nguyetCan'] = $nguyetCan;
 //     [3] => 7
 //     [4] => 51
 
-
+if(count($_GET) == 0){
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
  //x($maiHoa);
 
  $haoDong = $maiHoa['dong'];
  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+}else{
+      
+      $haoDong = str_split($_GET['dong'],1);
+      $queChinh = queChinhLucHao($quePhucHy, $_GET['que']);
+}
 
-// $haoDong = [];
-// $queChinh = queChinhLucHao($quePhucHy, '011001');
 $queChinhArr = str_split($queChinh['que'], 1);
 // x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
