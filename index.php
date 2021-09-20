@@ -271,8 +271,8 @@ $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 }else{
       
-      $haoDong = str_split($_GET['dong'],1);
-      $queChinh = queChinhLucHao($quePhucHy, $_GET['que']);
+      $haoDong = str_split($_GET['d'],1);
+      $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
 }
 
 $queChinhArr = str_split($queChinh['que'], 1);
