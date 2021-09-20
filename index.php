@@ -488,7 +488,7 @@ $tong['hao'][3]['tsThangBien'] = $vtsThang[$tong['hao'][3]['diaChiBien']] ;
 $tong['hao'][4]['tsThangBien'] = $vtsThang[$tong['hao'][4]['diaChiBien']] ;
 $tong['hao'][5]['tsThangBien'] = $vtsThang[$tong['hao'][5]['diaChiBien']] ;
 
-// x($tong);
+
 
 
 
@@ -662,6 +662,13 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                                   });
                                                             </script>
                                                       <?php
+                                                      $tong['hao'][$i]['phucLucThan'] = $lucThanQueGoc['lucThan'][$i];
+                                                      $tong['hao'][$i]['phucDiaChi'] = $dcQueGoc['diaChi'][$i];
+                                                      $tong['hao'][$i]['phucNguHanh'] = $dcnhQueGoc['nguHanh'][$i];
+                                                }else{
+                                                      $tong['hao'][$i]['phucLucThan'] = '';
+                                                      $tong['hao'][$i]['phucDiaChi'] = '';
+                                                      $tong['hao'][$i]['phucNguHanh'] = '';
                                                 }
                                                 ?>
                                                 
@@ -889,8 +896,51 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           // x($amDong);
                                     ?>
                               </td>
+
                         </tr>
+                        
             <?php
+                  if($tong['hao'][$i]['phucDiaChi'] != ''){
+                        ?>
+                              <tr>
+                                    <td>Phục Thần</td>
+                                    <td class='info'>
+                                    <?php 
+                                          $ss =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['phucDiaChi']));
+                                          echo $ss['luan']; 
+                                    ?>
+                                    </td>
+                                    <td class='info'>
+                                    <?php 
+                                          $ss1 = sosanhHao($tong['nhat'], $tong['hao'][$i]['phucDiaChi'], $allDC);
+                                          echo $ss1['luan']; 
+                                    ?>
+                                    </td>
+
+                                    <?php
+                                    for($x = 5; $x >= 0; $x--){
+                                                ?>
+                                                      <td class='info'>
+                                                            <?php 
+                                                                  $ss2 = sosanhHao($tong['hao'][$x]['diaChi'], $tong['hao'][$i]['phucDiaChi'], $allDC);
+                                                                  echo $ss2['luan'];
+                                                                  if($tong['hao'][$x]['haoDong'] == 1){
+                                                                        if($ss2['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3){
+                                                                              $amDong[0] = 1;
+                                                                        }
+                                                                  }                                                            
+                                                            ?>
+                                                      </td>
+                                                <?php
+                                          }
+                                    ?>
+                                    <td class='info'><?= '' ?></td>
+                                    <td class='info'><?= '' ?></td>
+                              </tr>
+                        <?php
+                  }
+
+
                   }
             ?>
 
@@ -932,6 +982,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Luận</th>
             </tr>
             <?php
+                  x($tong);
                   for($i = 5; $i >= 0; $i--){
                       $stt2 = $i + 1;
                         ?>
