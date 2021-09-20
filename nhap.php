@@ -238,7 +238,7 @@ $nguHanh = [
 // x(canhGio(13));
 // x($homNayAm);
 
- $al = $capsule->table('amlich')->get();
+ $al = $capsule->table('amLich')->get();
 
  $tong = [];
 
@@ -256,13 +256,7 @@ $tue = $a[1];
 
 $tong['nhat'] = $nhat;
 $tong['nguyet'] = $nguyet;
-// $tong['tue'] = $tue;
-
-//     [0] => 6   
-//     [1] => 8
-//     [2] => 2021
-//     [3] => 7
-//     [4] => 51
+$tong['tue'] = $tue;
 
 
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
@@ -271,8 +265,8 @@ $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
  $haoDong = $maiHoa['dong'];
  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 
-// $haoDong = [];
-// $queChinh = queChinhLucHao($quePhucHy, '011001');
+// $haoDong = [3,4];
+// $queChinh = queChinhLucHao($quePhucHy, '001100');
 $queChinhArr = str_split($queChinh['que'], 1);
 // x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
@@ -316,43 +310,40 @@ $tong['hao'][3]['nghiBien'] = $queBienArr[3];
 $tong['hao'][4]['nghiBien'] = $queBienArr[4];
 $tong['hao'][5]['nghiBien'] = $queBienArr[5];
 
-$tong['hao'][0]['haoDong'] = 0;
-$tong['hao'][1]['haoDong'] = 0;
-$tong['hao'][2]['haoDong'] = 0;
-$tong['hao'][3]['haoDong'] = 0;
-$tong['hao'][4]['haoDong'] = 0;
-$tong['hao'][5]['haoDong'] = 0;
-
-for($i = 0; $i < count($haoDong); $i++){
-      for($x = 0; $x <=5; $x++ ){
-            if($x+1 == $haoDong[$i]){
-                  $tong['hao'][$x]['haoDong'] = 1;
+for($i = 0; $i <= 5 ; $i++){
+      for($y = 0; $y < count($haoDong) ; $y++){
+            if($i == $haoDong[$y]){
+                  $tong['hao'][$i]['haoDong'] = 1;
+            }else{
+                  $tong['hao'][$i]['haoDong'] = 0;
             }
       }
 }
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
-//   x($gd);
+ // x($gd);
  $the = $gd['haoThe'] -1;
  $ung = $gd['haoUng'] -1;
 //  x($ung);
 
 for($i = 0; $i <= 5 ; $i++){
-            if($i == $the-1){
+      for($y = 0; $y < count($haoDong) ; $y++){
+            if($i == $the){
                   $tong['hao'][$i]['the'] = 1;
             }else{
                   $tong['hao'][$i]['the'] = 0;
             }
-      
+      }
 }
 
 for($i = 0; $i <= 5 ; $i++){
-            if($i == $ung-1){
+      for($y = 0; $y < count($haoDong) ; $y++){
+            if($i == $ung){
                   $tong['hao'][$i]['ung'] = 1;
             }else{
                   $tong['hao'][$i]['ung'] = 0;
             }
-      
+      }
 }
 
 $tc = thienCan($queChinh['que'],$quePhucHy,$thienCan);
@@ -360,7 +351,7 @@ $tc = thienCan($queChinh['que'],$quePhucHy,$thienCan);
 
 
 $dc = diaChi($queChinh['que'],$quePhucHy,$diaChi);
- 
+ //x($dc);
 $tong['hao'][0]['diaChi'] = $dc['diaChi'][0];
 $tong['hao'][1]['diaChi'] = $dc['diaChi'][1];
 $tong['hao'][2]['diaChi'] = $dc['diaChi'][2];
@@ -368,9 +359,6 @@ $tong['hao'][3]['diaChi'] = $dc['diaChi'][3];
 $tong['hao'][4]['diaChi'] = $dc['diaChi'][4];
 $tong['hao'][5]['diaChi'] = $dc['diaChi'][5];
 
-$dcQueGoc = diaChi($gd['queThuan'],$quePhucHy,$diaChi);
-$dcnhQueGoc = diaChiNguHanh($dcQueGoc['diaChi'],$diaChiNguHanh);
-$lucThanQueGoc = lucThan($gd['nguHanh'], $dcnhQueGoc);
 
 
 $dcnh = diaChiNguHanh($dc['diaChi'],$diaChiNguHanh);
@@ -393,6 +381,12 @@ $tong['hao'][2]['lucThan'] = $lt['lucThan'][2];
 $tong['hao'][3]['lucThan'] = $lt['lucThan'][3];
 $tong['hao'][4]['lucThan'] = $lt['lucThan'][4];
 $tong['hao'][5]['lucThan'] = $lt['lucThan'][5];
+
+
+// xd(tuyetMo('Ngọ',"Tỵ"));
+
+// x(conGiapThang(5));
+
 
 
 $kv = tuanKhong($ngayGieo);
@@ -486,20 +480,20 @@ $tong['hao'][3]['tsThangBien'] = $vtsThang[$tong['hao'][3]['diaChiBien']] ;
 $tong['hao'][4]['tsThangBien'] = $vtsThang[$tong['hao'][4]['diaChiBien']] ;
 $tong['hao'][5]['tsThangBien'] = $vtsThang[$tong['hao'][5]['diaChiBien']] ;
 
-// x($tong);
+x($tong);
+x(vuongTuong('Kim','Thổ'));
 /////////
 
-$allDC = [$nguyet, $nhat];
+$allDC = [$tue, $nguyet, $nhat];
 $allDC = array_merge($allDC, $dc['diaChi']);
 $allDCJson = json_encode($allDC, JSON_UNESCAPED_UNICODE);
 
-
-
-$capsule->table('diachi')->where('id','=',1)->update([
+$capsule->table('diaChi')->where('id','=',1)->update([
       'dc' => $allDCJson,
       
 ]);
 
+// x(tamHop('Dần', 'Ngọ', ['Tuất', 'Dần', 'Ngọ']));
 
 ?>
 <!DOCTYPE html>
@@ -515,39 +509,13 @@ $capsule->table('diachi')->where('id','=',1)->update([
 
 </head>
 <body>
-      
+      <hr>
+      <h5>Giờ <b><?= $al[0]->gio ?></b>, ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
 
-      <hr>
-      <h4>Quẻ Tượng</h4>
-      <hr>
-      <table class="table table-striped table-hover">
-            <tr>
-                  <th>Quẻ</th>
-                  <th>Luận</th>
-            </tr>
-            <tr class='text-left'>
-                  <td>
-                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queChinh['tenQue'] ?></span>      
-                  </td>
-                  <td>
-                        <?= queTuong($queChinh['que']) ?>
-                  </td>
-            </tr>
-            <tr class='text-left'>
-                  <td>
-                        <span class='badge bg-<?= mauNguHanh($gd['nguHanh']) ?>'><?= $queBien['tenQue'] ?></span>      
-                  </td>
-                  <td>
-                        <?= queTuong($queBien['que']) ?>
-                  </td>
-            </tr>
-      </table>
-      <hr>
-            <h5>Ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
-      <hr>
+      
 <hr>
-<h4>Lục Hào</h4>
-<hr>
+
+
       <table class="table table-hover">
             <tr>
                   <th>
@@ -556,9 +524,9 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         
                   </th>
                   <th>T/Ư</th>
-                  <th>Thân / Địa chi</th>
-                  <th>Phục</th>
+                  <th>Địa chi</th>
                   <th>KV</th>
+                  <th>Thân</th>
                   <th>Thú</th>
                   <th>TS Ngày</th>
                   <th>TS Tháng</th>
@@ -568,8 +536,9 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                     <span class='badge bg-<?= mauNguHanh($gdQueBien['nguHanh']) ?>'><?= $gdQueBien['nguHanh'] ?>
                               </th>
                               
-                              <th>Thân / Địa chi</th>
+                              <th>Địa chi</th>
                               <th>KV</th>
+                              <th>Thân</th>
                               <th>TS Ngày</th>
                               <th>TS Tháng</th>
             </tr>
@@ -577,7 +546,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   for($i =5 ; $i >= 0; $i--):
                         ?>
                               <tr>
-                                    <td class='info' id='<?= 'haovi'.$i ?>'>
+                                    <td>
                                           <?php
                                                 if(!in_array($i+1,$haoDong)){
                                                       if($queChinhArr[$i] == 1){
@@ -600,16 +569,9 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                       </p><?php
                                                       }
                                                 }
-                                                ?>
-                                                            <script>
-                                                                  $(document).ready(function () {
-                                                                        $('#<?= 'haovi'.$i ?>').attr('title', `<?= haoVi($i) ?>`)
-                                                                  });
-                                                            </script>
-                                                <?php
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                    <td>
                                           <?php 
                                           if($i == $gd['haoThe'] - 1){
                                           echo "Thế";
@@ -630,51 +592,33 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           
                                     </td>
                                     
-                                    <td class='info'>
+                                    <td>
                                           <?php
-                                                echo $lt['lucThan'][$i];
-                                                echo "<br>";
                                                 echo $dc['diaChi'][$i];
                                                 echo " - ";
                                                 $mau = mauNguHanh($dcnh['nguHanh'][$i]);
                                                 echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
                                           ?>
                                     </td>
-                                    
-                                    
-                                    <td class='info' id='<?= 'pt'.$i ?>'>
-                                          <?php
-                                                if(!in_array($lucThanQueGoc['lucThan'][$i],$lt['lucThan'])){
-                                                      echo $lucThanQueGoc['lucThan'][$i];
-                                                      echo "<br>";
-                                                      echo $dcQueGoc['diaChi'][$i];
-                                                      echo " - ";
-                                                      $mau = mauNguHanh($dcnhQueGoc['nguHanh'][$i]);
-                                                      echo "<span class='badge bg-$mau'>".$dcnhQueGoc['nguHanh'][$i]."</span>";
-                                                      ?>
-                                                            <script>
-                                                                  $(document).ready(function () {
-                                                                        $('#<?= 'pt'.$i ?>').attr('title', '<?= luanPhucThan($lucThanQueGoc['lucThan'][$i]) ?>')
-                                                                  });
-                                                            </script>
-                                                      <?php
-                                                }
-                                                ?>
-                                                
-                                    </td>
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                  if(in_array($dc['diaChi'][$i],$kv['khongVong'])){
                                                       echo "KV";
                                                 }
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                   
+                                    <td>
+                                          <?php
+                                                echo $lt['lucThan'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
                                           <?php
                                                 echo $lucThu['lucThu'][$i];
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                 $dcNgay = explode(' ', $ngayGieo);
                                                 $vts = vongTruongSinh(nguHanhTheoDiaChi($dcNgay[1]));
@@ -682,7 +626,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                 
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                 $dcThang = explode(' ', $thangGieo);
                                                 $vts = vongTruongSinh(nguHanhTheoDiaChi($dcThang[1]));
@@ -690,7 +634,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           ?>
                                     </td>
 
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                 if(!in_array($i+1,$haoDong)){
                                                       if($queBienArr[$i] == 1){
@@ -716,42 +660,35 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           ?>
                                     </td>
                                    
-                                    <td class='info' id='<?= 'queBien'.$i ?>'>
+                                    <td>
                                           <?php
-                                                echo $ltQueBien['lucThan'][$i];
-                                                echo "<br>";
                                                 echo $dcQueBien['diaChi'][$i];
                                                 echo " - ";
                                                 $mau = mauNguHanh($dcnhQueBien['nguHanh'][$i]);
                                                 echo "<span class='badge bg-$mau'>".$dcnhQueBien['nguHanh'][$i]."</span>";
-
-                                                if($tong['hao'][$i]['nghiThuong'] != $tong['hao'][$i]['nghiBien']){
-                                                      ?>
-                                                            <script>
-                                                                  $(document).ready(function () {
-                                                                        $('#<?= 'queBien'.$i ?>').attr('title', '<?= luanLucThanBien($lt['lucThan'][$i], $ltQueBien['lucThan'][$i]) ?>')
-                                                                  });
-                                                            </script>
-                                                      <?php
-                                                }
                                           ?>
                                     </td>
-                                    
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                  if(in_array($dcQueBien['diaChi'][$i],$kv['khongVong'])){
                                                       echo "KV";
                                                 }
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                    
+                                    <td>
+                                          <?php
+                                                echo $ltQueBien['lucThan'][$i];
+                                          ?>
+                                    </td>
+                                    <td>
                                           <?php
                                                 
                                                 echo "<p>".$vtsNgay[$dcQueBien['diaChi'][$i]]."</p>";
                                                 
                                           ?>
                                     </td>
-                                    <td class='info'>
+                                    <td>
                                           <?php
                                                 
                                                       echo "<p>".$vtsThang[$dcQueBien['diaChi'][$i]]."</p>";
@@ -764,162 +701,260 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         <?php
                   endfor;
                   ?> 
-                 
+                  <tr>
+                        <td class='text-left'><b>Chọn Hào dụng thần : </b><input type="text" id='haoDungThan'></td>
+                  </tr>
       </table>
-      
 
-      <hr>
-      <h4>Kết quả so sánh</h4>
-      <hr>
-      <table class='table table-hover'>
-            <tr>
-                  <th>Hào</th>
-                  <th>Nguyệt</th>
-                  <th>Nhật</th>
-                  <th>Hào 6</th>
-                  <th>Hào 5</th>
-                  <th>Hào 4</th>
-                  <th>Hào 3</th>
-                  <th>Hào 2</th>
-                  <th>Hào 1</th>
-                  <th>Hào Biến</th>
-                  <th>Ám</th>
+      <div id="data"></div>
+
+      <!-- <div class="container"> -->
+            <!-- <div id='ketquass' class='row'>
+                  <div id='queDon' class='col'>
+                  <b>Quẻ Đơn</b><br>
+                  <?= $queChinh['ha']." ".$queChinh['nguHanhHa']." -> ".$queChinh['thuong']." ".$queChinh['nguHanhThuong'].", " ?>
+                  </div>
+                  <div id='haoThe' class='col'>
+                        <b>Hào Thế</b><br>
+                  </div>
+                  <div id='haoUng' class='col'>
+                        <b>Hào Ứng</b><br>
+                  </div>
+                  <div id='haoDong' class='col'>
+                        <b>Hào Động</b><br>
+                  </div>
+                  <div id='dungThan' class='col'>
+                        <b>Dụng Thần</b><br>
+                  </div>
+                  <div id='ssThuCong' class='col'>
+                        <b>So Sánh tay</b><br>
+                  </div>
+
+            </div> -->
+            <!-- <hr>
+            <input type="text" id='comment' class='form-control'>
+            <hr> -->
+            <!-- <form id='sosanh' action="sosanh.php" method='post'>
+            <table class="table">
+                  <tr>
+                        <th>Loại SS</th>
+                        <th>Đối tượng 1</th>
+                        <th>Đối tượng 2</th>
+                        <th></th>
+                  </tr>
+                  <tr>
+                        <td>
+                              <select class='form-control' name="loai" id="loai">
+                                    <option value="nguHanh">Ngũ Hành</option>
+                                    <option value="diaChi">Địa Chi</option>
+                                    <option value="lucThan">Lục Thân</option>
+                              </select>
+                        </td>
+                        <td id='con1'>
+                              <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                        </td>
+                        <td id='con2'>
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                        </td>
+                        <td><button type="submit" class='btn btn-success' >So Sánh</button></td>
+                  </tr>
                   
-            </tr>
-            <?php
-                  for($i = 5; $i >= 0; $i--){
-                        $amDong = [0,0];
-                        $stt1 = $i +1;
-                        ?>
-                        <tr>
-                              <td class='info'><?= 'Hào '.$stt1  ?></td>
-                              <td class='info'>
-                                    <?php 
-                                          $ss =  sosanhNhatNguyet($tong['nguyet'], $tong['hao'][$i]['diaChi'], $allDC);
-                                          echo $ss['luan']; 
-                                          if($ss['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3 || $ss['ketQua'] == 6){
-                                                $amDong[0] = 1;
-                                          }
-                                    ?>
-                              </td>
-                              <td class='info'>
-                                    <?php 
-                                          $ss1 = sosanhNhatNguyet($tong['nhat'], $tong['hao'][$i]['diaChi'], $allDC);
-                                          echo $ss1['luan']; 
-                                          $xung = nhiXung($tong['nhat'], $tong['hao'][$i]['diaChi']);
-                                          if($xung['ketQua']){
-                                                $amDong[1] = 1;
-                                          }
-                                    ?>
-                              </td>
-                              
-                              <?php
-                                    for($x = 5; $x >= 0; $x--){
-                                          ?>
-                                                <td class='info'>
-                                                      <?php 
-                                                            $ss2 = sosanhHao($tong['hao'][$x]['diaChi'], $tong['hao'][$i]['diaChi'], $allDC);
-                                                            echo $ss2['luan'];
-                                                            if($tong['hao'][$x]['haoDong'] == 1){
-                                                                  if($ss2['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3){
-                                                                        $amDong[0] = 1;
-                                                                  }
-                                                            }                                                            
-                                                      ?>
-                                                </td>
-                                          <?php
-                                    }
-                              ?>
-                              <td class='info'>
-                                    <?php
-                                          if($tong['hao'][$i]['nghiThuong'] != $tong['hao'][$i]['nghiBien']){
-                                                $ss3 = sosanhHao($tong['hao'][$i]['diaChi'], $tong['hao'][$i]['diaChiBien'], $allDC);
-                                                echo $ss3['luan'];
-                                          }
-                                    ?>
-                              </td>
-                              <td class='info'>
-                                    <?php
-                                          if($amDong[0] == 1 && $amDong[1] == 1){
-                                                echo 'Ám động';
-                                          }
-                                          // x($amDong);
-                                    ?>
-                              </td>
-                        </tr>
-            <?php
-                  }
-            ?>
+            </table>
+            </form>
 
-      </table>
+      </div>
 
-      <hr>
-      <h4>Luận lục thân gặp lục thú</h4>
-      <hr>
-      <table class="table table-striped table-hover">
-            <tr>
-                  <th>Hào</th>
-                  <th>Thú</th>
-                  <th>Thân</th>
-                  <th>Luận</th>
-            </tr>
-            <?php
-                  for($i = 5; $i >= 0; $i--){
-                      $stt = $i + 1;
-                        ?>
-                              <tr class='text-left'>
-                                    <td><?= 'Hào '.$stt ?> </td>
-                                    <td><?= $tong['hao'][$i]['lucThu'] ?></td>
-                                    <td><?= $tong['hao'][$i]['lucThan'] ?></td>
-                                    <td><?= luanLucThanLucThu($tong['hao'][$i]['lucThan'], $tong['hao'][$i]['lucThu']) ?></td>
-                              </tr>
-                        <?php
-                  }
+      <script>
+            $(document).ready(function () {
+                  let ss = $('#loai').val();
+                  $('#loai').on('change', function (e){
+                        var optionSelected = $("option:selected", this);
+                        var ss = this.value;
+
+                        if(ss == 'nguHanh'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Kim">Kim</option>
+                                          <option value="Mộc">Mộc</option>
+                                          <option value="Thủy">Thủy</option>
+                                          <option value="Hỏa">Hỏa</option>
+                                          <option value="Thổ">Thổ</option>
+                                    </select>
+                              `)
+                        }else if(ss == 'diaChi'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Tý">Tý</option>
+                                          <option value="Sửu">Sửu</option>
+                                          <option value="Dần">Dần</option>
+                                          <option value="Mão">Mão</option>
+                                          <option value="Thìn">Thìn</option>
+                                          <option value="Tỵ">Tỵ</option>
+                                          <option value="Ngọ">Ngọ</option>
+                                          <option value="Mùi">Mùi</option>
+                                          <option value="Thân">Thân</option>
+                                          <option value="Dậu">Dậu</option>
+                                          <option value="Tuất">Tuất</option>
+                                          <option value="Hợi">Hợi</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Tý">Tý</option>
+                                          <option value="Sửu">Sửu</option>
+                                          <option value="Dần">Dần</option>
+                                          <option value="Mão">Mão</option>
+                                          <option value="Thìn">Thìn</option>
+                                          <option value="Tỵ">Tỵ</option>
+                                          <option value="Ngọ">Ngọ</option>
+                                          <option value="Mùi">Mùi</option>
+                                          <option value="Thân">Thân</option>
+                                          <option value="Dậu">Dậu</option>
+                                          <option value="Tuất">Tuất</option>
+                                          <option value="Hợi">Hợi</option>
+                                    </select>
+                              `)
+                        }else if(ss == 'lucThan'){
+                              $('#con1').html(`
+                                    <select class='form-control' name="dt1" id="dt1">
+                                          <option value="Huynh Đệ">Huynh Đệ</option>
+                                          <option value="Tử Tôn">Tử Tôn</option>
+                                          <option value="Thê Tài">Thê Tài</option>
+                                          <option value="Quan Quỷ">Quan Quỷ</option>
+                                          <option value="Phụ Mẫu">Phụ Mẫu</option>
+                                    </select>
+                              `)
+                              $('#con2').html(`
+                                    <select class='form-control' name="dt2" id="dt2">
+                                          <option value="Huynh Đệ">Huynh Đệ</option>
+                                          <option value="Tử Tôn">Tử Tôn</option>
+                                          <option value="Thê Tài">Thê Tài</option>
+                                          <option value="Quan Quỷ">Quan Quỷ</option>
+                                          <option value="Phụ Mẫu">Phụ Mẫu</option>
+                                    </select>
+                              `)
+                        }
+
+                        console.log(valueSelected);
+                  })
+
+                  $('#sosanh').submit((e) => {
+                        e.preventDefault();
+                        $.post('sosanh.php', {
+                              loaiTT: $('#loai').val(),
+                              dt1: $('#dt1').val(),
+                              dt2: $('#dt2').val(),
+                        },(data) =>{
+                              $('#ssThuCong').append(data);
+                        })
+                  })
+                  $("#comment").keyup(function(e){ 
+                        var code = e.key; // recommended to use e.key, it's normalized across devices and languages
+                        if(code==="Enter") {
+                              e.preventDefault()
+                              let cmmt = $('#comment').val()
+                              let cmmtArr = cmmt.split(' ')
+                              let order = cmmtArr[0];
+                              cmmtArr.shift()
+                              cmmt = cmmtArr.join(' ')
+                              let hao = '';
+                              if(order == 'dong'){
+                                    hao = 'haoDong'
+                              }else if(order =='ung'){
+                                    hao = 'haoUng'
+                              }else if(order == 'the'){
+                                    hao = 'haoThe'
+                              }else if(order == 'dt'){
+                                    hao = 'dungThan'
+                              }else if(order == "que"){
+                                    hao = 'queDon'
+                              }else if(order == "ss"){
+                                    hao = 'ssThuCong'
+                              }
+                              $('#'+hao).append(" -> "+cmmt);
+                              $("#comment").val('')
+                        }
+                         // missing closing if brace
+                  });
+
+                  //que don
+                  soSanh('<?= $queChinh['nguHanhHa'] ?>', '<?= $queChinh['nguHanhThuong'] ?>','nguHanh','queDon', ' ');
+                  // Hao the
+                  soSanh('<?= $dc['diaChi'][$the] ?>', '<?= $tue ?>','diaChi','haoThe', 'Tuế: ');
+                  soSanh('<?= $dc['diaChi'][$the] ?>', '<?= $nguyet ?>','diaChi','haoThe', 'Nguyệt: ');
+                  soSanh('<?= $dc['diaChi'][$the] ?>', '<?= $nhat ?>','diaChi','haoThe', 'Nhật: ');
+
+                  //hao Ung
+                  soSanh('<?= $dc['diaChi'][$ung] ?>', '<?= $tue ?>','diaChi','haoUng', 'Tuế: ');
+                  soSanh('<?= $dc['diaChi'][$ung] ?>', '<?= $nguyet ?>','diaChi','haoUng', 'Nguyệt: ');
+                  soSanh('<?= $dc['diaChi'][$ung] ?>', '<?= $nhat ?>','diaChi','haoUng', 'Nhật: ');
+
+                  //hao dong
+                  soSanh('<?= $dc['diaChi'][$haoDong-1] ?>', '<?= $tue ?>','diaChi','haoDong', 'Tuế: ');
+                  soSanh('<?= $dc['diaChi'][$haoDong-1] ?>', '<?= $nguyet ?>','diaChi','haoDong', 'Nguyệt: ');
+                  soSanh('<?= $dc['diaChi'][$haoDong-1] ?>', '<?= $nhat ?>','diaChi','haoDong', 'Nhật: ');
+
+                  soSanh('<?= $lt['lucThan'][$haoDong-1] ?>', '<?= $ltQueBien['lucThan'][$haoDong-1] ?>','lucThan','haoDong', 'Hào động : ');
+
+                  //dungthan
+                  $('#haoDungThan').keyup(function(e){ 
+                        var code = e.key; // recommended to use e.key, it's normalized across devices and languages
+                        if(code==="Enter") {
+                              let dt = $('#haoDungThan').val()
+                              let dungThan = {
+                                    hd:'Huynh Đệ',tton:'Tử Tôn', ttai:'Thê Tài', qq:'Quan Quỷ', pm:'Phụ Mẫu'
+                              };
+                              let isDungThan = dt in dungThan;
+                              x(isDungThan)
+                              if(isDungThan > -1){
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$the] ?>','lucThan','dungThan', 'Thế: ');
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$ung] ?>','lucThan','dungThan', 'Ứng: ');
+                                    soSanh(dungThan[dt], '<?= $lt['lucThan'][$haoDong-1] ?>','lucThan','dungThan', 'Động: ');
+                              }
+                              //console.log(isDungThan)
+                        }
+                         // missing closing if brace
+                  });
                   
-            ?>
-      </table>
-      <hr>
-      <h4>Luận lục thú gặp địa chi</h4>
-      <hr>
-      <table class="table table-striped table-hover">
-            <tr>
-                  <th>Hào</th>
-                  <th>Địa Chi</th>
-                  <th>Thú</th>
-                  <th>Luận</th>
-            </tr>
-            <?php
-                  for($i = 5; $i >= 0; $i--){
-                      $stt2 = $i + 1;
-                        ?>
-                              <tr class='text-left'>
-                                    <td><?= 'Hào '.$stt2 ?> </td>
-                                    <td><?= $tong['hao'][$i]['diaChi'] ?></td>
-                                    <td><?= $tong['hao'][$i]['lucThu'] ?></td>
-                                    <td><?= luanLucThuDiaChi($tong['hao'][$i]['lucThu'], $tong['hao'][$i]['diaChi']) ?></td>
-                              </tr>
-                        <?php
-                  }
-                  
-            ?>
-      </table>
+            });
 
+            let soSanh = (a ,b, loaiTT, doData, comment ) => {
+                  $.post('sosanh.php', {
+                        loaiTT: loaiTT,
+                        dt1: a,
+                        dt2: b,
+                  },(data) =>{
+                        $('#'+doData).append(comment+data+'<br>');
+                  })
 
-    <script>
-          $(document).ready(function () {
-                $('.info').on('click',function(){
-                      if($(this).hasClass('chon')){
-                            $(this).removeClass('chon')
-                      }else{
-                              $(this).addClass('chon')
-                      }
-                })
-          });
-    </script>
+            }
+            let x = (a) => { console.log(a)}
+      </script> -->
+
+    
 </body>
 </html>
-
-
 
 
 

@@ -32,3 +32,9 @@ th {
   text-align: center;
   border-right: 1px solid #34495e;
 }
+.chon {
+  background-color: #c0392b;
+  color: #c0392b;
+  font-weight: bolder;
+  border-bottom: 10px solid #c0392b;
+}

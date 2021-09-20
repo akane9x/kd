@@ -2,14 +2,15 @@
 
 require_once('func.php');
 
+$alJson = str_replace('Tí', 'Tý', $_POST['ngayThang'] ); 
 
-$amLich = json_decode($_POST['ngayThang']);
+$amlich = json_decode($alJson);
 
-$capsule->table('amLich')->where('id','=',1)->update([
-      'gio' => $amLich[0],
-      'ngay' => $amLich[1],
-      'thang' => $amLich[2],
-      'nam' => $amLich[3],
+$capsule->table('amlich')->where('id','=',1)->update([
+      'gio' => $amlich[0],
+      'ngay' => $amlich[1],
+      'thang' => $amlich[2],
+      'nam' => $amlich[3],
 ]);
 
 ?>

@@ -6,7 +6,7 @@ $loaiTT = $_POST['loaiTT'];
 $a = $_POST['dt1'];
 $b = $_POST['dt2'];
 
-$allDC = $capsule->table('diaChi')->get();
+$allDC = $capsule->table('diachi')->get();
 $diaChi = $allDC[0]->dc;
 $diaChi = json_decode($diaChi);
 
@@ -31,7 +31,7 @@ if($a != $b){
                               $e = nguHanhTheoDiaChi($b);
                               $nhsk = nguHanhSinhKhac($d, $e);
                               if($nhsk['ketQua']){
-                                    echo "$a ".$nhsk['luan']." $b";
+                                    echo "$d ".$nhsk['luan']." $e";
                               }
                         }
                   }
