@@ -335,8 +335,8 @@ for($i = 0; $i < count($haoDong); $i++){
 
 $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
 //   x($gd);
- $the = $gd['haoThe'] -1;
- $ung = $gd['haoUng'] -1;
+ $the = $gd['haoThe'] ;
+ $ung = $gd['haoUng'] ;
 //  x($ung);
 
 for($i = 0; $i <= 5 ; $i++){
@@ -580,7 +580,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
             <?php
                   for($i =5 ; $i >= 0; $i--):
                         ?>
-                              <tr>
+                              <tr class='hao<?= $i+1 ?>'>
                                     <td class='info' id='<?= 'haovi'.$i ?>'>
                                           <?php
                                                 if(!in_array($i+1,$haoDong)){
@@ -841,7 +841,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         $amDong = [0,0];
                         $stt1 = $i +1;
                         ?>
-                        <tr>
+                        <tr class='hao<?= $i+1 ?>'>
                               <td class='info'><?= 'Hào '.$stt1  ?></td>
                               <td class='info'>
                                     <?php 
@@ -902,7 +902,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
             <?php
                   if($tong['hao'][$i]['phucDiaChi'] != ''){
                         ?>
-                              <tr>
+                              <tr class='hao<?= $i+1 ?>'>
                                     <td>Phục Thần</td>
                                     <td class='info'>
                                     <?php 
@@ -960,7 +960,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   for($i = 5; $i >= 0; $i--){
                       $stt = $i + 1;
                         ?>
-                              <tr class='text-left'>
+                              <tr class='text-left hao<?= $i+1 ?>>'>
                                     <td><?= 'Hào '.$stt ?> </td>
                                     <td><?= $tong['hao'][$i]['lucThu'] ?></td>
                                     <td><?= $tong['hao'][$i]['lucThan'] ?></td>
@@ -986,7 +986,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   for($i = 5; $i >= 0; $i--){
                       $stt2 = $i + 1;
                         ?>
-                              <tr class='text-left'>
+                              <tr class='text-left hao<?= $i+1 ?>>'>
                                     <td><?= 'Hào '.$stt2 ?> </td>
                                     <td><?= $tong['hao'][$i]['diaChi'] ?></td>
                                     <td><?= $tong['hao'][$i]['lucThu'] ?></td>
@@ -1008,6 +1008,15 @@ $capsule->table('diachi')->where('id','=',1)->update([
                               $(this).addClass('chon')
                       }
                 })
+                
+                $('.hao<?= $ung ?>').attr('style','background-color: #2c3e50; color:white')
+                $('.hao<?= $the ?>').attr('style','background-color: #2c3e50; color:white')
+                
+                <?php
+                  foreach($haoDong as $hd){
+                        echo "$('.hao".$hd."').attr('style','background-color: #2c3e50; color:white');";
+                  }
+                ?>
           });
     </script>
 </body>

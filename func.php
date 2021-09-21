@@ -856,18 +856,18 @@ function tuyetMo($c1, $c2){
 	$kq = false;
 	$luan = $c1.", ".$c2.' Không tuyệt, không mộ';
 
-	if(in_array($c2, $tuyetMo[$c1])){
-		if(array_search($c2, $tuyetMo[$c1]) == 0){
+	// if(in_array($c2, $tuyetMo[$c1])){
+	// 	if(array_search($c2, $tuyetMo[$c1]) == 0){
 			
-				$kq = true; // "2t1";
-				$luan =  $c1." <b>tuyệt</b> tại ".$c2;
+	// 			$kq = true; // "2t1";
+	// 			$luan =  $c1." <b>tuyệt</b> tại ".$c2;
 			
-		}elseif(array_search($c2, $tuyetMo[$c1]) == 1){
-			$kq = true; //"2m1";
-			$luan = $c1." <b>mộ</b> tại ".$c2;
+	// 	}elseif(array_search($c2, $tuyetMo[$c1]) == 1){
+	// 		$kq = true; //"2m1";
+	// 		$luan = $c1." <b>mộ</b> tại ".$c2;
 			
-		}
-	}
+	// 	}
+	// }
 
 	if(in_array($c1, $tuyetMo[$c2])){
 		if(array_search($c1, $tuyetMo[$c2]) == 0){
