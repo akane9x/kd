@@ -1009,8 +1009,8 @@ $capsule->table('diachi')->where('id','=',1)->update([
                       }
                 })
                 
-                $('.hao<?= $ung ?>').attr('style','background-color: #2c3e50; color:white')
-                $('.hao<?= $the ?>').attr('style','background-color: #2c3e50; color:white')
+                $('.hao<?= $ung ?>').attr('style','background-color: #74b9ff; ')
+                $('.hao<?= $the ?>').attr('style','background-color: #74b9ff; ')
                 
                 <?php
                   foreach($haoDong as $hd){
