@@ -547,6 +547,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
       <hr>
             <h5>Ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
       <hr>
+
 <hr>
 <h4>Lục Hào</h4>
 <hr>
@@ -821,9 +822,13 @@ $capsule->table('diachi')->where('id','=',1)->update([
       <hr>
       <h4>Kết quả so sánh</h4>
       <hr>
+      <hr>
+            <h5>Ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
+      <hr>
       <table class='table table-hover'>
             <tr>
                   <th>Hào</th>
+                  <th>Thông Tin</th>
                   <th>Nguyệt</th>
                   <th>Nhật</th>
                   <th>Hào 6</th>
@@ -843,6 +848,16 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         ?>
                         <tr class='hao<?= $i+1 ?>'>
                               <td class='info'><?= 'Hào '.$stt1  ?></td>
+                              <td class='info'>
+                                    <?php
+                                          echo $lt['lucThan'][$i];
+                                          echo "<br>";
+                                          echo $dc['diaChi'][$i];
+                                          echo " - ";
+                                          $mau = mauNguHanh($dcnh['nguHanh'][$i]);
+                                          echo "<span class='badge bg-$mau'>".$dcnh['nguHanh'][$i]."</span>";
+                                    ?>
+                              </td>
                               <td class='info'>
                                     <?php 
                                           $ss =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['diaChi']));
@@ -904,6 +919,16 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         ?>
                               <tr class='hao<?= $i+1 ?>'>
                                     <td>Phục Thần</td>
+                                    <td>
+                                    <?php
+                                                echo $tong['hao'][$i]['phucLucThan'];
+                                                echo "<br>";
+                                                echo $tong['hao'][$i]['phucDiaChi'];
+                                                echo " - ";
+                                                $mau = mauNguHanh($tong['hao'][$i]['phucNguHanh']);
+                                                echo "<span class='badge bg-$mau'>".$tong['hao'][$i]['phucNguHanh']."</span>";
+                                          ?>
+                                    </td>
                                     <td class='info'>
                                     <?php 
                                           $ss =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['phucDiaChi']));
@@ -982,7 +1007,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Luận</th>
             </tr>
             <?php
-                  x($tong);
+                  // x($tong);
                   for($i = 5; $i >= 0; $i--){
                       $stt2 = $i + 1;
                         ?>
@@ -1009,7 +1034,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                       }
                 })
                 
-                $('.hao<?= $ung ?>').attr('style','background-color: #74b9ff; ')
+                $('.hao<?= $ung ?>').attr('style','background-color: #27ae60; ')
                 $('.hao<?= $the ?>').attr('style','background-color: #74b9ff; ')
                 
                 <?php
