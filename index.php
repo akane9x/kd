@@ -270,9 +270,21 @@ $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
  $haoDong = $maiHoa['dong'];
  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 }else{
+      $queArr = str_split($_GET['q'],1);
+      $loai = '';
+      foreach($queArr as $qa){
+            if($qa > 1){ $loai = 'mh';}else{$loai = 'lh';}
+      }
+
+      if($loai == 'lh'){
+            $haoDong = str_split($_GET['d'],1);
+            $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
+      }elseif($loai == 'mh'){
+            $queArr = str_split($_GET['q'],2);
+            $haoDong = [$queArr[2]%6];
+            $queChinh = queChinhMaiHoa($quePhucHy, $queArr[1]%8, $queArr[0]%8);
+      }
       
-      $haoDong = str_split($_GET['d'],1);
-      $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
 }
 
 $queChinhArr = str_split($queChinh['que'], 1);
@@ -837,13 +849,14 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Hào 3</th>
                   <th>Hào 2</th>
                   <th>Hào 1</th>
-                  <th>Hào Biến</th>
+                  <th>Biến vs Động</th>
+                  <th>Biến SV</th>
                   <th>Ám</th>
                   
             </tr>
             <?php
                   for($i = 5; $i >= 0; $i--){
-                        $amDong = [0,0];
+                        $amDong = [0,0,0];
                         $stt1 = $i +1;
                         ?>
                         <tr class='hao<?= $i+1 ?>'>
@@ -887,7 +900,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                             echo $ss2['luan'];
                                                             if($tong['hao'][$x]['haoDong'] == 1){
                                                                   if($ss2['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3){
-                                                                        $amDong[0] = 1;
+                                                                        $amDong[2] = 1;
                                                                   }
                                                             }                                                            
                                                       ?>
@@ -903,9 +916,20 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           }
                                     ?>
                               </td>
+                              <td class="info">
+                                    <?php
+                                          if($tong['hao'][$i]['nghiThuong'] != $tong['hao'][$i]['nghiBien']){
+                                                $ss4 =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['diaChiBien']));
+                                                echo $ss4['luan'];
+                                                echo "<br>";
+                                                $ss5 =  sosanhHaoBien($tong['nhat'], $tong['hao'][$i]['diaChiBien']);
+                                                echo $ss5['luan'];
+                                          }
+                                    ?>
+                              </td>
                               <td class='info'>
                                     <?php
-                                          if($amDong[0] == 1 && $amDong[1] == 1){
+                                          if($amDong[0] == 1 && $amDong[1] == 1 && $amDong[2] == 1){
                                                 echo 'Ám động';
                                           }
                                           // x($amDong);
@@ -1007,7 +1031,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Luận</th>
             </tr>
             <?php
-                  // x($tong);
+                  x($tong);
                   for($i = 5; $i >= 0; $i--){
                       $stt2 = $i + 1;
                         ?>

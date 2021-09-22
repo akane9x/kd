@@ -1195,6 +1195,43 @@ function sosanhHao($a, $b, $allDiaChi){
 	];
 }
 
+function sosanhHaoBien($a, $b){
+	$kq = 0;
+	$luan = '';
+	$tuyetMo = tuyetMo($a, $b);
+            if($tuyetMo['ketQua']){
+                  $luan = $tuyetMo['luan'];
+			$kq = 1;
+            }else{
+                        $nhiHop = nhiHop($a, $b);
+				if($nhiHop['ketQua']){
+					$luan = $nhiHop['luan'];
+					$kq = 3;
+				}else{
+					$nhiXung = nhiXung($a, $b);
+					if($nhiXung['ketQua']){
+						$luan = $nhiXung['luan'];
+						$kq = 4;
+					}else{
+						$d = nguHanhTheoDiaChi($a);
+						$e = nguHanhTheoDiaChi($b);
+						$nhsk = nguHanhSinhKhac($d, $e);
+						if($nhsk['ketQua']){
+							$luan = $nhsk['luan'];
+							if($nhsk['code'] == 1){
+								$kq = 5;
+							}
+						}
+					}
+				}
+                  }
+            
+	return [
+		'ketQua' => $kq,
+		'luan' =>$luan
+	];
+}
+
 function luanLucThanLucThu($than, $thu){
 	$thuVien = [
 		'Thanh Long' => [
