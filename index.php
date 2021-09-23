@@ -831,9 +831,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
       </table>
       
 
-      <hr>
-      <h4>Kết quả so sánh</h4>
-      <hr>
+
       <hr>
             <h5>Ngày <b><?= $al[0]->ngay ?></b>, tháng <b><?= $al[0]->thang ?></b>, năm <b><?= $al[0]->nam ?></b> <a class='btn btn-success float-end' href="getNgay.php">Cập nhật Thời gian</a></h5>
       <hr>
@@ -884,6 +882,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                     <?php 
                                           $ss1 = sosanhHao($tong['nhat'], $tong['hao'][$i]['diaChi'], $allDC);
                                           echo $ss1['luan']; 
+                                          
                                           $xung = nhiXung($tong['nhat'], $tong['hao'][$i]['diaChi']);
                                           if($xung['ketQua']){
                                                 $amDong[1] = 1;
@@ -896,13 +895,22 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                           ?>
                                                 <td class='info'>
                                                       <?php 
-                                                            $ss2 = sosanhHao($tong['hao'][$x]['diaChi'], $tong['hao'][$i]['diaChi'], $allDC);
+                                                            $ss2 = sosanhHao($tong['hao'][$i]['diaChi'],$tong['hao'][$x]['diaChi'], $allDC);
                                                             echo $ss2['luan'];
+
                                                             if($tong['hao'][$x]['haoDong'] == 1){
                                                                   if($ss2['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3){
                                                                         $amDong[2] = 1;
                                                                   }
-                                                            }                                                            
+                                                            }
+                                                            // $ss21 = sosanhHao($tong['hao'][$i]['diaChi'],$tong['hao'][$x]['diaChi'], $allDC);
+                                                            
+                                                            // if($ss21['luan'] == $ss2['luan']){
+                                                            //       echo $ss21['luan'];
+                                                            // }else{
+                                                            //       echo $ss2['luan']."<br>".$ss21['luan'];
+                                                            // }
+
                                                       ?>
                                                 </td>
                                           <?php
@@ -911,7 +919,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                               <td class='info'>
                                     <?php
                                           if($tong['hao'][$i]['nghiThuong'] != $tong['hao'][$i]['nghiBien']){
-                                                $ss3 = sosanhHao($tong['hao'][$i]['diaChi'], $tong['hao'][$i]['diaChiBien'], $allDC);
+                                                $ss3 = sosanhHao($tong['hao'][$i]['diaChiBien'],$tong['hao'][$i]['diaChi'], $allDC);
                                                 echo $ss3['luan'];
                                           }
                                     ?>
@@ -922,7 +930,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                 $ss4 =  vuongTuong(nguHanhTheoDiaChi($tong['nguyet']), nguHanhTheoDiaChi($tong['hao'][$i]['diaChiBien']));
                                                 echo $ss4['luan'];
                                                 echo "<br>";
-                                                $ss5 =  sosanhHaoBien($tong['nhat'], $tong['hao'][$i]['diaChiBien']);
+                                                $ss5 =  sosanhHaoBien( $tong['hao'][$i]['diaChiBien'],$tong['nhat']);
                                                 echo $ss5['luan'];
                                           }
                                     ?>
@@ -961,7 +969,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                     </td>
                                     <td class='info'>
                                     <?php 
-                                          $ss1 = sosanhHao($tong['nhat'], $tong['hao'][$i]['phucDiaChi'], $allDC);
+                                          $ss1 = sosanhHao($tong['hao'][$i]['phucDiaChi'],$tong['nhat'], $allDC);
                                           echo $ss1['luan']; 
                                     ?>
                                     </td>
@@ -971,7 +979,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                 ?>
                                                       <td class='info'>
                                                             <?php 
-                                                                  $ss2 = sosanhHao($tong['hao'][$x]['diaChi'], $tong['hao'][$i]['phucDiaChi'], $allDC);
+                                                                  $ss2 = sosanhHao($tong['hao'][$i]['phucDiaChi'], $tong['hao'][$x]['diaChi'], $allDC);
                                                                   echo $ss2['luan'];
                                                                   if($tong['hao'][$x]['haoDong'] == 1){
                                                                         if($ss2['ketQua'] == 5 || $ss['ketQua'] == 2 || $ss['ketQua'] == 3){

@@ -1081,6 +1081,7 @@ function vuongTuong($a, $b){
 
 	$pa = $nguHanh1[$a];
 	$dem = 0;
+	$diem = 0;
 	for($i = $pa; $i < $pa+5; $i++){
 		if($nguHanh[$i] == $b){
 			break;
@@ -1091,20 +1092,26 @@ function vuongTuong($a, $b){
 	$kq = '';
 	if($dem == 1){
 		$kq = 'Tướng';
+		$diem = 3;
 	}elseif($dem == 2){
 		$kq = 'Tử';
+		$diem = 0;
 	}elseif($dem == 3){
 		$kq = 'Tù';
+		$diem = 1;
 	}elseif($dem == 4){
 		$kq = 'Hưu';
+		$diem = 2;
 	}elseif($dem == 0){
 		$kq = 'Vượng';
+		$diem = 4;
 	}
 
 	return [
 		'ketQua' =>$dem,
 		'luan' =>$kq,
-		'code'=>$dem
+		'code'=>$dem,
+		'diem' => $diem
 	];
 
 }
