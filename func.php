@@ -292,6 +292,8 @@ array_push($homNayAm, $homNay->hour);
 array_push($homNayAm, $homNay->minute);
 
 function queChinhMaiHoa($quePH, $ha, $thuong){
+	if($ha == 0) $ha = 6;
+	if($thuong == 0) $thuong = 6;
 	$bQ = [
 		'111',
 		'110' ,
@@ -432,10 +434,9 @@ function isThuanArray($que){
 
 function queBien($queChinh, $haoDong,$quePH){
 
-      
       if(count($haoDong)){
 		$b = str_split($queChinh,1);
-	$c = [];
+		$c = [];
 	for($i = 0; $i < count($haoDong); $i++){
 		$a = $haoDong[$i] -1;
 		if($i == 0){
@@ -1891,5 +1892,43 @@ function taiSat($dcNgay, $dcHao){
 	$kq = false;
 	if($thuVien[$dcNgay] == $dcHao) $kq = true;
 	return $kq;
+}
+
+function quaiThan($theDC){
+	$thuVien = [
+		'Tý'  => 0,
+		'Sửu'  => 1,
+		'Dần' => 2,
+		'Mão'  => 3,
+
+		'Thìn'  => 4,
+		'Tỵ'  => 5,
+		'Ngọ' => 0,
+		'Mùi'  => 1,
+
+		'Thân'  => 2,
+		'Dậu'  => 3,
+		'Tuất' => 4,
+		'Hợi'  => 5,
+	];
+	return $thuVien[$theDC];
+}
+
+function thanQue($nghi, $the){
+	$duong = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ'];
+	$am = ['Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+	$than = '';
+	for($i = 0; $i  <= $the; $i++){
+		if($i == $the){
+			if($nghi == 0){
+				$than = $am[$i];
+			}elseif($nghi == 1){
+				$than = $duong[$i];
+			}
+		}
+		
+	}
+	return $than;
+
 }
 

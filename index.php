@@ -262,16 +262,17 @@ $tong['nguyetCan'] = $nguyetCan;
 //     [2] => 2021
 //     [3] => 7
 //     [4] => 51
-
+$haoDong = [];
+$loai = '';
 if(count($_GET) == 0){
 $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
  //x($maiHoa);
 
  $haoDong = $maiHoa['dong'];
  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+
 }else{
       $queArr = str_split($_GET['q'],1);
-      $loai = '';
       foreach($queArr as $qa){
             if($qa > 1){ $loai = 'mh';}else{$loai = 'lh';}
       }
@@ -280,13 +281,15 @@ $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
             $haoDong = str_split($_GET['d'],1);
             $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
       }elseif($loai == 'mh'){
+
             $queArr = str_split($_GET['q'],2);
-            $haoDong = [$queArr[2]%6];
+            $z = $queArr[2]%6;
+            if($z == 0) $z = 6;
+            $haoDong = [$z];
             $queChinh = queChinhMaiHoa($quePhucHy, $queArr[1]%8, $queArr[0]%8);
       }
       
 }
-
 $queChinhArr = str_split($queChinh['que'], 1);
 // x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
@@ -349,6 +352,7 @@ $gd = giaDinh($queChinh['que'],$quePhucHy,$batQuaiNguHanh);
 //   x($gd);
  $the = $gd['haoThe'] ;
  $ung = $gd['haoUng'] ;
+
 //  x($ung);
 
 for($i = 0; $i <= 5 ; $i++){
@@ -382,6 +386,16 @@ $tong['hao'][3]['diaChi'] = $dc['diaChi'][3];
 $tong['hao'][4]['diaChi'] = $dc['diaChi'][4];
 $tong['hao'][5]['diaChi'] = $dc['diaChi'][5];
 
+$quaiThan = 0;
+$thanQue = '';
+for($i = 0; $i <= 5 ; $i++){
+      if($tong['hao'][$i]['the'] == 1){
+            $quaiThan = quaiThan($tong['hao'][$i]['diaChi']);
+            $thanQue = thanQue($tong['hao'][$i]['nghiThuong'], $i);
+      }
+      
+}
+x($thanQue);
 $dcQueGoc = diaChi($gd['queThuan'],$quePhucHy,$diaChi);
 $dcnhQueGoc = diaChiNguHanh($dcQueGoc['diaChi'],$diaChiNguHanh);
 $lucThanQueGoc = lucThan($gd['nguHanh'], $dcnhQueGoc);
@@ -500,15 +514,9 @@ $tong['hao'][3]['tsThangBien'] = $vtsThang[$tong['hao'][3]['diaChiBien']] ;
 $tong['hao'][4]['tsThangBien'] = $vtsThang[$tong['hao'][4]['diaChiBien']] ;
 $tong['hao'][5]['tsThangBien'] = $vtsThang[$tong['hao'][5]['diaChiBien']] ;
 
-
-
-
-
 $allDC = [$nguyet, $nhat];
 $allDC = array_merge($allDC, $dc['diaChi']);
 $allDCJson = json_encode($allDC, JSON_UNESCAPED_UNICODE);
-
-
 
 $capsule->table('diachi')->where('id','=',1)->update([
       'dc' => $allDCJson,
@@ -858,8 +866,21 @@ $capsule->table('diachi')->where('id','=',1)->update([
                         $stt1 = $i +1;
                         ?>
                         <tr class='hao<?= $i+1 ?>'>
-                              <td class='info'><?= 'Hào '.$stt1  ?></td>
                               <td class='info'>
+                                    <?php
+                                          if($i != $quaiThan){
+                                                echo 'Hào '.$stt1;
+                                          }else{
+                                                echo 'Hào '.$stt1."<br>";
+                                                echo "QT";  
+                                          }
+
+                                          if($tong['hao'][$i]['diaChi'] == $thanQue){
+                                                echo '<br>TQ';
+                                          }
+                                    ?>
+                              </td>
+                              <td class='info <?= $dcnh['nguHanh'][$i] == $thanQue ? 'thanQue' : '' ?>'>
                                     <?php
                                           echo $lt['lucThan'][$i];
                                           echo "<br>";
@@ -903,14 +924,6 @@ $capsule->table('diachi')->where('id','=',1)->update([
                                                                         $amDong[2] = 1;
                                                                   }
                                                             }
-                                                            // $ss21 = sosanhHao($tong['hao'][$i]['diaChi'],$tong['hao'][$x]['diaChi'], $allDC);
-                                                            
-                                                            // if($ss21['luan'] == $ss2['luan']){
-                                                            //       echo $ss21['luan'];
-                                                            // }else{
-                                                            //       echo $ss2['luan']."<br>".$ss21['luan'];
-                                                            // }
-
                                                       ?>
                                                 </td>
                                           <?php
@@ -1039,7 +1052,7 @@ $capsule->table('diachi')->where('id','=',1)->update([
                   <th>Luận</th>
             </tr>
             <?php
-                  x($tong);
+                  // x($tong);
                   for($i = 5; $i >= 0; $i--){
                       $stt2 = $i + 1;
                         ?>
