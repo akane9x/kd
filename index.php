@@ -286,7 +286,11 @@ $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
             $z = $queArr[2]%6;
             if($z == 0) $z = 6;
             $haoDong = [$z];
-            $queChinh = queChinhMaiHoa($quePhucHy, $queArr[1]%8, $queArr[0]%8);
+            $z0 =  $queArr[0]%8;
+            if($z0 == 0) $z0 = 8;
+            $z1 =  $queArr[1]%8;
+            if($z1 == 0) $z1 = 8;
+            $queChinh = queChinhMaiHoa($quePhucHy, $z1, $z0);
       }
       
 }
