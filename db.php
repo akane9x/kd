@@ -28,11 +28,7 @@ $capsule->setAsGlobal();
 // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
 $capsule->bootEloquent();
 
-function x($a){
-      echo "<pre>";
-      print_r($a);
-      echo "</pre>";
-}
+
 
 ?>
 

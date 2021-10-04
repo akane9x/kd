@@ -265,35 +265,53 @@ $tong['nguyetCan'] = $nguyetCan;
 $haoDong = [];
 $loai = '';
 if(count($_GET) == 0){
-$maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
- //x($maiHoa);
-
- $haoDong = $maiHoa['dong'];
- $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
-
+      $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
+      //x($maiHoa);
+      $haoDong = $maiHoa['dong'];
+      $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
 }else{
-      $queArr = str_split($_GET['q'],1);
-      foreach($queArr as $qa){
-            if($qa > 1){ $loai = 'mh';}else{$loai = 'lh';}
-      }
+      if(is_numeric($_GET['q'])){
+            $queArr = str_split($_GET['q'],1);
+            foreach($queArr as $qa){
+                  if($qa > 1){ $loai = 'mh';}else{$loai = 'lh';}
+            }
 
-      if($loai == 'lh'){
-            $haoDong = str_split($_GET['d'],1);
-            $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
-      }elseif($loai == 'mh'){
+            if($loai == 'lh'){
+                  $haoDong = str_split($_GET['d'],1);
+                  $queChinh = queChinhLucHao($quePhucHy, $_GET['q']);
+            }elseif($loai == 'mh'){
 
-            $queArr = str_split($_GET['q'],2);
-            $z = $queArr[2]%6;
-            if($z == 0) $z = 6;
-            $haoDong = [$z];
-            $z0 =  $queArr[0]%8;
-            if($z0 == 0) $z0 = 8;
-            $z1 =  $queArr[1]%8;
-            if($z1 == 0) $z1 = 8;
-            $queChinh = queChinhMaiHoa($quePhucHy, $z1, $z0);
+                  $queArr = str_split($_GET['q'],2);
+                  $z = $queArr[2]%6;
+                  if($z == 0) $z = 6;
+                  $haoDong = [$z];
+                  $z0 =  $queArr[0]%8;
+                  if($z0 == 0) $z0 = 8;
+                  $z1 =  $queArr[1]%8;
+                  if($z1 == 0) $z1 = 8;
+                  $queChinh = queChinhMaiHoa($quePhucHy, $z1, $z0);
+            }
+      }else{
+            if($_GET['q'] == 'r'){
+                  $queArr = [rand(0,99),rand(0,99),rand(0,99)];
+                  $z = $queArr[2]%6;
+                  if($z == 0) $z = 6;
+                  $haoDong = [$z];
+                  $z0 =  $queArr[0]%8;
+                  if($z0 == 0) $z0 = 8;
+                  $z1 =  $queArr[1]%8;
+                  if($z1 == 0) $z1 = 8;
+                  $queChinh = queChinhMaiHoa($quePhucHy, $z1, $z0);
+            }else{
+                  $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
+                  //x($maiHoa);
+                  $haoDong = $maiHoa['dong'];
+                  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+            }
       }
       
 }
+
 $queChinhArr = str_split($queChinh['que'], 1);
 // x($queChinh);
 // $queHo = queHo($queChinh, $quePhucHy);
