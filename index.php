@@ -232,8 +232,55 @@ $nguHanh = [
 //  x($homNayAm);
 
 
- $al = $capsule->table('amlich')->get();
+$al[0] = new stdClass();
 
+ if(isset($_GET['t'])){
+       x($_GET['t']);
+      $tArr = explode('-',$_GET['t']);
+      $al0 = $capsule->table('amlich')->get();
+      for($i = 0; $i < count($tArr); $i++){
+            $a = $tArr[$i] - 1;
+            $tArr[$i] = $a;
+      }
+      
+      $dictChi = [
+            'Tý',
+		'Dậu',
+		'Ngọ',
+		'Hợi',
+		'Tý',
+		'Dậu',
+		'Ngọ',
+		'Hợi',
+		'Tý',
+		'Dậu',
+		'Ngọ',
+		'Hợi',
+      ];
+      $dictCan = [
+            'Giáp',
+            'Ất',
+            'Bính',
+            'Đinh',
+            'Mậu',
+            'Kỷ',
+            'Canh',
+            'Tân',
+            'Nhâm',
+            'Quý',
+      ];
+      $ngay = $dictCan[$tArr[0]].' '.$dictChi[$tArr[1]];
+      $thang = $dictCan[$tArr[2]].' '.$dictChi[$tArr[3]];
+      $al[0]->ngay = $ngay;
+      $al[0]->thang = $thang;
+      $al[0]->nam = $al0[0]->nam;
+      $al[0]->gio = $al0[0]->gio;
+      
+ }else{
+      $al = $capsule->table('amlich')->get();
+      
+ }
+x($al);
  $tong = [];
 
 $gioGieo = $al[0]->gio;
