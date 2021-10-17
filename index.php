@@ -280,7 +280,7 @@ $al[0] = new stdClass();
       $al = $capsule->table('amlich')->get();
       
  }
-x($al);
+// x($al);
  $tong = [];
 
 $gioGieo = $al[0]->gio;
@@ -309,6 +309,7 @@ $tong['nguyetCan'] = $nguyetCan;
 //     [2] => 2021
 //     [3] => 7
 //     [4] => 51
+
 $haoDong = [];
 $loai = '';
 if(count($_GET) == 0){
@@ -349,6 +350,13 @@ if(count($_GET) == 0){
                   $z1 =  $queArr[1]%8;
                   if($z1 == 0) $z1 = 8;
                   $queChinh = queChinhMaiHoa($quePhucHy, $z1, $z0);
+            }elseif($_GET['q'] == 'bd'){
+                  $homNayAm[3] = $_GET['gio'];
+                  $maiHoa = gieoQueMaiHoaBongDa($namGieo, $homNayAm,$_GET['doi']);
+                  //x($maiHoa);
+                  $haoDong = $maiHoa['dong'];
+                  $queChinh = queChinhMaiHoa($quePhucHy, $maiHoa['ha'], $maiHoa['thuong']);
+
             }else{
                   $maiHoa = gieoQueMaiHoa($namGieo, $homNayAm);
                   //x($maiHoa);
@@ -464,7 +472,7 @@ for($i = 0; $i <= 5 ; $i++){
       }
       
 }
-x($thanQue);
+// x($thanQue);
 $dcQueGoc = diaChi($gd['queThuan'],$quePhucHy,$diaChi);
 $dcnhQueGoc = diaChiNguHanh($dcQueGoc['diaChi'],$diaChiNguHanh);
 $lucThanQueGoc = lucThan($gd['nguHanh'], $dcnhQueGoc);

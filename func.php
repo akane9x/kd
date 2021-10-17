@@ -1050,6 +1050,63 @@ function gieoQueMaiHoa ($n, $time){
 	];
 }
 
+
+function gieoQueMaiHoaBongDa ($n, $time,$doi1){
+	$diaChi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+	$nam = explode(' ',$n);
+	$d = str_split($doi1,1);
+	$d1 = count($d);
+	// $d2 = count($doi2);
+
+	$soNam = array_search($nam[1],$diaChi) + 1;
+
+	$gio = [
+		'0' => 'Tý',
+		'1' => 'Sửu',
+		'2' => 'Sửu',
+		'3' => 'Dần',
+		'4' => 'Dần',
+		'5' => 'Mão',
+		'6' => 'Mão',
+		'7' => 'Thìn',
+		'8' => 'Thìn',
+		'9' => 'Tỵ',
+		'10' => 'Tỵ',
+		'11' => 'Ngọ',
+		'12' => 'Ngọ',
+		'13' => 'Mùi',
+		'14' => 'Mùi',
+		'15' => 'Thân',
+		'16' => 'Thân',
+		'17' => 'Dậu',
+		'18' => 'Dậu',
+		'19' => 'Tuất',
+		'20' => 'Tuất',
+		'21' => 'Hợi',
+		'22' => 'Hợi',
+		'23' => 'Tý',
+	];
+	$soGio = array_search($gio[$time[3]],$diaChi) + 1;
+
+	$queThuong = ($soNam + $time[0] + $time[1] + $d1) % 8;
+	if($queThuong == 0){
+		$queThuong = 8;
+	}
+	$queHa = ($soNam + $time[0] + $time[1] + $soGio + $d1) % 8;
+	if($queHa == 0){
+		$queHa = 8;
+	}
+	$haoDong = ($soNam + $time[0] + $time[1] + $soGio + $d1) % 6;
+	if($haoDong == 0){
+		$haoDong = 6;
+	}
+	return [
+		'thuong' => $queThuong,
+		'ha' => $queHa,
+		'dong' => [$haoDong],
+	];
+}
+
 function vuongTuong($a, $b){
 	$nguHanh = ['Kim', 'Thủy', 'Mộc', 'Hỏa', 'Thổ','Kim', 'Thủy', 'Mộc', 'Hỏa', 'Thổ'];
 
